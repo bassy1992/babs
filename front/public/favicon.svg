@@ -1,0 +1,96 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="256" cy="256" r="256" fill="#ffffff"/>
+  
+  <!-- Main Logo Elements -->
+  <g transform="translate(256, 256) scale(0.8)">
+    <!-- Top Flowers -->
+    <g transform="translate(0, -120)">
+      <!-- Center Flower -->
+      <g transform="translate(0, 0)">
+        <circle cx="0" cy="-15" r="8" fill="#e91e63"/>
+        <circle cx="-12" cy="-7" r="8" fill="#e91e63"/>
+        <circle cx="12" cy="-7" r="8" fill="#e91e63"/>
+        <circle cx="-12" cy="7" r="8" fill="#e91e63"/>
+        <circle cx="12" cy="7" r="8" fill="#e91e63"/>
+        <circle cx="0" cy="15" r="8" fill="#e91e63"/>
+        <circle cx="0" cy="0" r="6" fill="#fff8e1"/>
+      </g>
+      
+      <!-- Left Flower -->
+      <g transform="translate(-40, 10)">
+        <circle cx="0" cy="-10" r="6" fill="#e91e63"/>
+        <circle cx="-8" cy="-5" r="6" fill="#e91e63"/>
+        <circle cx="8" cy="-5" r="6" fill="#e91e63"/>
+        <circle cx="-8" cy="5" r="6" fill="#e91e63"/>
+        <circle cx="8" cy="5" r="6" fill="#e91e63"/>
+        <circle cx="0" cy="10" r="6" fill="#e91e63"/>
+        <circle cx="0" cy="0" r="4" fill="#fff8e1"/>
+      </g>
+      
+      <!-- Right Flower -->
+      <g transform="translate(40, 10)">
+        <circle cx="0" cy="-10" r="6" fill="#e91e63"/>
+        <circle cx="-8" cy="-5" r="6" fill="#e91e63"/>
+        <circle cx="8" cy="-5" r="6" fill="#e91e63"/>
+        <circle cx="-8" cy="5" r="6" fill="#e91e63"/>
+        <circle cx="8" cy="5" r="6" fill="#e91e63"/>
+        <circle cx="0" cy="10" r="6" fill="#e91e63"/>
+        <circle cx="0" cy="0" r="4" fill="#fff8e1"/>
+      </g>
+    </g>
+    
+    <!-- EB Letters -->
+    <g transform="translate(0, -20)">
+      <!-- E Letter -->
+      <g transform="translate(-45, 0)">
+        <rect x="-25" y="-40" width="50" height="12" fill="#e91e63"/>
+        <rect x="-25" y="-40" width="12" height="80" fill="#e91e63"/>
+        <rect x="-25" y="-6" width="35" height="12" fill="#e91e63"/>
+        <rect x="-25" y="28" width="50" height="12" fill="#e91e63"/>
+      </g>
+      
+      <!-- B Letter -->
+      <g transform="translate(45, 0)">
+        <rect x="-25" y="-40" width="12" height="80" fill="#e91e63"/>
+        <path d="M -13 -40 L 15 -40 Q 25 -40 25 -25 Q 25 -15 15 -10 Q 25 -5 25 10 Q 25 25 15 25 L -13 25 Z M -13 -28 L 15 -28 Q 13 -28 13 -25 Q 13 -15 15 -15 L -13 -15 Z M -13 -3 L 15 -3 Q 13 -3 13 5 Q 13 13 15 13 L -13 13 Z" fill="#e91e63"/>
+      </g>
+    </g>
+    
+    <!-- Bottom Flowers -->
+    <g transform="translate(0, 120)">
+      <!-- Left Flower -->
+      <g transform="translate(-30, -10)">
+        <circle cx="0" cy="-10" r="6" fill="#e91e63"/>
+        <circle cx="-8" cy="-5" r="6" fill="#e91e63"/>
+        <circle cx="8" cy="-5" r="6" fill="#e91e63"/>
+        <circle cx="-8" cy="5" r="6" fill="#e91e63"/>
+        <circle cx="8" cy="5" r="6" fill="#e91e63"/>
+        <circle cx="0" cy="10" r="6" fill="#e91e63"/>
+        <circle cx="0" cy="0" r="4" fill="#fff8e1"/>
+      </g>
+      
+      <!-- Center Flower -->
+      <g transform="translate(0, 0)">
+        <circle cx="0" cy="-15" r="8" fill="#e91e63"/>
+        <circle cx="-12" cy="-7" r="8" fill="#e91e63"/>
+        <circle cx="12" cy="-7" r="8" fill="#e91e63"/>
+        <circle cx="-12" cy="7" r="8" fill="#e91e63"/>
+        <circle cx="12" cy="7" r="8" fill="#e91e63"/>
+        <circle cx="0" cy="15" r="8" fill="#e91e63"/>
+        <circle cx="0" cy="0" r="6" fill="#fff8e1"/>
+      </g>
+      
+      <!-- Right Flower -->
+      <g transform="translate(30, -10)">
+        <circle cx="0" cy="-10" r="6" fill="#e91e63"/>
+        <circle cx="-8" cy="-5" r="6" fill="#e91e63"/>
+        <circle cx="8" cy="-5" r="6" fill="#e91e63"/>
+        <circle cx="-8" cy="5" r="6" fill="#e91e63"/>
+        <circle cx="8" cy="5" r="6" fill="#e91e63"/>
+        <circle cx="0" cy="10" r="6" fill="#e91e63"/>
+        <circle cx="0" cy="0" r="4" fill="#fff8e1"/>
+      </g>
+    </g>
+  </g>
+</svg>
