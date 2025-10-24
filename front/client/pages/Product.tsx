@@ -280,7 +280,7 @@ export default function Product() {
 
   // Fetch product from API
   const { data: product, isLoading, error } = useProduct(slug);
-  const { data: relatedData } = useRelatedProducts(slug);
+  const { data: relatedData } = useRelatedProducts(product?.slug || slug);
 
   const [activeImage, setActiveImage] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<string>("");
