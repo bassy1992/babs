@@ -59,6 +59,14 @@ export default function Review() {
 
       const order = await api.orders.create(orderData);
 
+      // Initialize payment with backend (this saves the reference)
+      const callbackUrl = `${window.location.origin}/order/${order.id}/confirmation`;
+      const paymentInit = await api.orders.initializePayment(order.id, callbackUrl);
+      
+      if (!paymentInit.status) {
+        throw new Error(paymentInit.message || 'Failed to initialize payment');
+      }
+
       // Get Paystack public key
       const config = await api.orders.getPaystackConfig();
       
@@ -66,14 +74,12 @@ export default function Review() {
         throw new Error('Paystack is not configured. Please contact support.');
       }
 
-      // Initialize Paystack payment
-      const callbackUrl = `${window.location.origin}/order/${order.id}/confirmation`;
-      
+      // Open Paystack popup
       await initializePaystack({
         publicKey: config.public_key,
         email: shippingInfo.email,
         amount: total,
-        reference: `PAY-${order.id}-${Date.now()}`,
+        reference: paymentInit.data.reference,
         metadata: {
           order_id: order.id,
           customer_name: shippingInfo.full_name,
@@ -102,6 +108,7 @@ export default function Review() {
       });
 
     } catch (err: any) {
+      console.error('Order processing error:', err);
       setError(err.message || 'Failed to process order');
       setIsProcessing(false);
     }

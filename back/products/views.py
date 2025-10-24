@@ -103,7 +103,18 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     @action(detail=True, methods=['get'])
     def related(self, request, slug=None):
         """Get related products"""
-        product = self.get_object()
+        # Handle both slug and ID
+        slug_or_id = slug
+        try:
+            # Try to get by slug first
+            product = self.queryset.get(slug=slug_or_id)
+        except Product.DoesNotExist:
+            # Try by ID
+            try:
+                product = self.queryset.get(id=slug_or_id)
+            except Product.DoesNotExist:
+                return Response({'detail': 'Not found.'}, status=404)
+        
         # Simple related logic: exclude current product, get 3 random
         related = self.queryset.exclude(id=product.id).order_by('?')[:3]
         serializer = ProductListSerializer(related, many=True)

@@ -87,6 +87,11 @@ class OrderViewSet(viewsets.ModelViewSet):
         # Generate unique reference
         reference = f"PAY-{order.id}-{order.created_at.timestamp()}"
         
+        # Debug logging
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info(f"Initializing payment - Order: {order.id}, Email: {order.email}, Amount: {order.total}, Reference: {reference}")
+        
         # Initialize payment with Paystack
         result = paystack.initialize_transaction(
             email=order.email,
@@ -116,10 +121,16 @@ class OrderViewSet(viewsets.ModelViewSet):
                 }
             })
         else:
+            # Log the full error for debugging
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Paystack initialization failed: {result}")
+            
             return Response(
                 {
                     'status': False,
-                    'message': result.get('message', 'Failed to initialize payment')
+                    'message': result.get('message', 'Failed to initialize payment'),
+                    'error': str(result)
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )

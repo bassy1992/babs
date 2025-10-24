@@ -37,10 +37,11 @@ class IngredientInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'is_featured', 'is_bestseller', 'is_active', 'created_at']
-    list_filter = ['is_featured', 'is_bestseller', 'is_active', 'created_at']
+    list_display = ['name', 'collection', 'price', 'is_featured', 'is_bestseller', 'is_active', 'created_at']
+    list_filter = ['collection', 'is_featured', 'is_bestseller', 'is_active', 'created_at']
     search_fields = ['name', 'description', 'id']
     prepopulated_fields = {'slug': ('name',)}
+    autocomplete_fields = ['collection']
     inlines = [
         ProductImageInline,
         ProductVariantInline,

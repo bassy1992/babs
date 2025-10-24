@@ -12,6 +12,16 @@ class Product(models.Model):
     story = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     
+    # Collection - every product belongs to a collection (brand)
+    collection = models.ForeignKey(
+        'product_collections.ProductCollection',
+        on_delete=models.PROTECT,
+        related_name='collection_products',
+        null=True,
+        blank=True,
+        help_text='Brand/Collection this product belongs to'
+    )
+    
     # Product details
     is_featured = models.BooleanField(default=False)
     is_bestseller = models.BooleanField(default=False)

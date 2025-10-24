@@ -30,13 +30,15 @@ class OrderSerializer(serializers.ModelSerializer):
 
 class OrderCreateSerializer(serializers.ModelSerializer):
     items = serializers.ListField(write_only=True)
+    id = serializers.CharField(read_only=True)
+    total = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
     
     class Meta:
         model = Order
         fields = [
-            'email', 'full_name',
+            'id', 'email', 'full_name',
             'shipping_address', 'shipping_city', 'shipping_postal_code', 'shipping_country',
-            'payment_method', 'promo_code', 'items'
+            'payment_method', 'promo_code', 'total', 'items'
         ]
     
     def create(self, validated_data):

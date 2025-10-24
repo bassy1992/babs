@@ -11,7 +11,7 @@ import Shop from "./pages/Shop";
 import { CartProvider } from "@/context/CartContext";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/site/Layout";
-import Placeholder from "./pages/Placeholder";
+import Collections from "./pages/Collections";
 import About from "./pages/About";
 
 import Collection from "./pages/Collection";
@@ -30,12 +30,12 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Index />} />
             <Route path="/shop" element={<Shop />} />
-            <Route path="/collections" element={<Placeholder title="Collections" />} />
+            <Route path="/collections" element={<Collections />} />
             <Route path="/about" element={<About />} />
 
             {/* Category / Collection */}

@@ -106,7 +106,8 @@ export const api = {
   collections: {
     list: async () => {
       const response = await fetch(`${API_BASE_URL}/collections/`);
-      return response.json();
+      const data = await response.json();
+      return data.results || data;
     },
 
     get: async (slug: string): Promise<ApiCollectionDetail> => {
@@ -117,7 +118,8 @@ export const api = {
 
     featured: async (): Promise<ApiCollection[]> => {
       const response = await fetch(`${API_BASE_URL}/collections/featured/`);
-      return response.json();
+      const data = await response.json();
+      return data.results || data;
     },
   },
 
@@ -196,7 +198,8 @@ export const api = {
       });
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.message || 'Failed to initialize payment');
+        console.error('Payment initialization error:', error);
+        throw new Error(error.message || error.error || 'Failed to initialize payment');
       }
       return response.json();
     },

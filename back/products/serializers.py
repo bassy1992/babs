@@ -45,10 +45,12 @@ class ProductListSerializer(serializers.ModelSerializer):
     """Simplified serializer for product lists"""
     
     image = serializers.SerializerMethodField()
+    collection_name = serializers.CharField(source='collection.title', read_only=True)
+    collection_slug = serializers.CharField(source='collection.slug', read_only=True)
     
     class Meta:
         model = Product
-        fields = ['id', 'name', 'slug', 'price', 'image', 'badge', 'is_bestseller']
+        fields = ['id', 'name', 'slug', 'price', 'image', 'badge', 'is_bestseller', 'collection_name', 'collection_slug']
     
     def get_image(self, obj):
         primary_image = obj.images.filter(is_primary=True).first()
@@ -71,6 +73,8 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     sizes = serializers.SerializerMethodField()
     accords = serializers.SerializerMethodField()
     ritual = serializers.SerializerMethodField()
+    collection_name = serializers.CharField(source='collection.title', read_only=True)
+    collection_slug = serializers.CharField(source='collection.slug', read_only=True)
     
     class Meta:
         model = Product
@@ -78,7 +82,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             'id', 'name', 'slug', 'description', 'story', 'price',
             'images', 'notes', 'highlights', 'ritual_steps',
             'ingredients', 'rating', 'badge', 'is_featured', 'is_bestseller',
-            'created_at', 'updated_at',
+            'created_at', 'updated_at', 'collection_name', 'collection_slug',
             # Frontend-compatible fields
             'gallery', 'sizes', 'accords', 'ritual'
         ]

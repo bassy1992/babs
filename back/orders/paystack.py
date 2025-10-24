@@ -55,6 +55,20 @@ class PaystackAPI:
             response = requests.post(url, json=payload, headers=self._get_headers())
             response.raise_for_status()
             return response.json()
+        except requests.exceptions.HTTPError as e:
+            # Return the actual error from Paystack
+            try:
+                error_data = e.response.json()
+                return {
+                    'status': False,
+                    'message': error_data.get('message', str(e)),
+                    'data': error_data
+                }
+            except:
+                return {
+                    'status': False,
+                    'message': str(e)
+                }
         except requests.exceptions.RequestException as e:
             return {
                 'status': False,
