@@ -13,6 +13,8 @@ export function useProduct(slug: string | undefined) {
     queryKey: ['product', slug],
     queryFn: () => api.products.get(slug!),
     enabled: !!slug,
+    retry: 1, // Only retry once for 404s
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
 }
 
@@ -28,6 +30,7 @@ export function useRelatedProducts(slug: string | undefined) {
     queryKey: ['products', 'related', slug],
     queryFn: () => api.products.related(slug!),
     enabled: !!slug,
+    retry: 1, // Only retry once for 404s
   });
 }
 
