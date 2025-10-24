@@ -1,5 +1,12 @@
 import { Link } from "react-router-dom";
-import { Mail, Instagram, Facebook, Twitter } from "lucide-react";
+import { Mail, Instagram, Facebook, MessageCircle } from "lucide-react";
+
+// TikTok icon component (lucide doesn't have TikTok, so we'll use a custom SVG)
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+  </svg>
+);
 
 const logoUrl =
   "https://cdn.builder.io/api/v1/image/assets%2F261a98e6df434ad1ad15c1896e5c6aa3%2F221f1b7f10774a3d9288702a5384a36e?format=webp&width=800";
@@ -89,11 +96,42 @@ export function Footer() {
               </button>
             </form>
             <div className="flex gap-2 sm:gap-3 text-muted-foreground">
-              {[{ icon: Instagram, label: "Instagram" }, { icon: Facebook, label: "Facebook" }, { icon: Twitter, label: "Twitter" }].map(({ icon: Icon, label }) => (
-                <a key={label} href="#" aria-label={label} className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full border transition-colors hover:border-primary hover:text-primary active:scale-95">
-                  <Icon className="size-3 sm:size-4" />
-                </a>
-              ))}
+              <a 
+                href="https://www.instagram.com/barbies_essentials/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="Instagram" 
+                className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full border transition-colors hover:border-primary hover:text-primary active:scale-95"
+              >
+                <Instagram className="size-3 sm:size-4" />
+              </a>
+              <a 
+                href="https://www.facebook.com/Barbies%20Essentials" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="Facebook" 
+                className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full border transition-colors hover:border-primary hover:text-primary active:scale-95"
+              >
+                <Facebook className="size-3 sm:size-4" />
+              </a>
+              <a 
+                href="https://www.tiktok.com/@mizz_mirielle" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="TikTok" 
+                className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full border transition-colors hover:border-primary hover:text-primary active:scale-95"
+              >
+                <TikTokIcon className="size-3 sm:size-4" />
+              </a>
+              <a 
+                href="https://api.whatsapp.com/send/?phone=233547936812&text&type=phone_number&app_absent=0" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="WhatsApp" 
+                className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full border transition-colors hover:border-primary hover:text-primary active:scale-95"
+              >
+                <MessageCircle className="size-3 sm:size-4" />
+              </a>
             </div>
           </div>
         </div>
