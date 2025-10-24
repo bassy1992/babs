@@ -22,10 +22,10 @@ export function Footer() {
               Elevated scents and rituals crafted in small batches for moments of quiet luxury.
             </p>
             <div className="flex items-center gap-2 sm:gap-3 text-xs text-muted-foreground">
-              <span className="inline-flex size-7 sm:size-8 items-center justify-center rounded-full border text-[10px] sm:text-xs">NYC</span>
+              <span className="inline-flex size-7 sm:size-8 items-center justify-center rounded-full border text-[10px] sm:text-xs">GH</span>
               <div>
-                <div className="font-medium text-foreground text-xs sm:text-sm">654 Bloom Street</div>
-                <div className="text-xs sm:text-sm">New York, NY 10012</div>
+                <div className="font-medium text-foreground text-xs sm:text-sm">GT-090-4335</div>
+                <div className="text-xs sm:text-sm">Tema Community, Ghana</div>
               </div>
             </div>
           </div>
