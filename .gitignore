@@ -54,3 +54,4 @@ coverage/
 *.bak
 *.backup
 front/client/pages/Product.tsx.backup
+.vercel
