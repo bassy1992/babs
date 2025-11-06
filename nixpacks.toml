@@ -1,11 +1,2 @@
-[build]
-providers = ["python"]
-
-[phases.setup]
-nixPkgs = ["python311"]
-
-[phases.install]
-cmds = ["pip install -r back/requirements.txt"]
-
 [phases.build]
 cmds = ["cd back && python manage.py collectstatic --noinput"]
