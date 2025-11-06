@@ -35,60 +35,69 @@ function QuickAdd({ product }: { product: Product }) {
 export function ProductCard({ product }: { product: Product }) {
   return (
     <UiCard
-      className="group relative flex h-full w-full flex-col overflow-hidden rounded-2xl sm:rounded-[20px] border border-primary/10 bg-white/60 backdrop-blur transition-all duration-500 hover:-translate-y-1 sm:hover:-translate-y-2 hover:border-primary/30 hover:shadow-xl sm:hover:shadow-2xl animate-fade-up"
+      className="group relative flex h-full w-full flex-col overflow-hidden rounded-xl md:rounded-2xl border bg-white transition-all duration-300 hover:shadow-lg md:hover:shadow-xl md:hover:-translate-y-1 animate-fade-up"
     >
       <UiCardContent className="flex flex-1 flex-col p-0">
+        {/* Image container */}
         <div className="relative w-full">
           <Link to={`/product/${product.id}`} className="block">
-            <div className="aspect-[4/5] sm:aspect-[3/4] lg:aspect-[4/5] w-full overflow-hidden rounded-b-[24px] sm:rounded-b-[36px] rounded-t-2xl sm:rounded-t-[20px] bg-gradient-to-br from-primary/5 via-white to-primary/10">
+            <div className="aspect-[3/4] w-full overflow-hidden bg-muted">
               <img
                 src={product.image}
                 alt={product.name}
-                className="responsive-img object-cover brightness-[0.88] saturate-[0.85] transition-transform duration-500 group-hover:scale-105"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
           </Link>
 
+          {/* Badge */}
           {product.badge && (
-            <div className="absolute left-2 sm:left-3 top-2 sm:top-3 inline-flex items-center gap-1 sm:gap-2 rounded-full border border-white/60 bg-white/90 px-2 sm:px-2.5 py-0.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wide text-primary shadow-sm">
+            <div className="absolute left-2 top-2 rounded-full bg-primary/90 backdrop-blur-sm px-2 py-0.5 text-[9px] md:text-[10px] font-bold uppercase tracking-wide text-primary-foreground shadow-sm">
               {product.badge}
             </div>
           )}
 
+          {/* Wishlist button - Desktop only */}
           <button
             aria-label="Add to wishlist"
-            className="absolute right-2 sm:right-3 top-2 sm:top-3 z-10 inline-flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full border border-white/60 bg-white/90 text-muted-foreground shadow-md transition hover:bg-white active:scale-95"
+            className="hidden md:inline-flex absolute right-2 top-2 z-10 size-8 items-center justify-center rounded-full bg-white/90 backdrop-blur-sm border shadow-sm transition-all hover:bg-white hover:scale-110 active:scale-95"
             onClick={(e) => e.preventDefault()}
-            title="Add to wishlist"
           >
-            <Heart className="size-3 sm:size-[14px] text-primary transition group-hover:scale-110" />
+            <Heart className="size-3.5" />
           </button>
 
-          <div className="absolute inset-x-0 bottom-0 z-10 px-2 sm:px-3 pb-2 sm:pb-3">
-            <div className="w-full sm:max-w-[200px] sm:translate-y-4 sm:opacity-0 sm:transition-all sm:duration-500 sm:group-hover:translate-y-0 sm:group-hover:opacity-100">
+          {/* Quick add button - Desktop hover only */}
+          <div className="hidden md:block absolute inset-x-0 bottom-0 z-10 px-3 pb-3">
+            <div className="translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
               <QuickAdd product={product} />
             </div>
           </div>
         </div>
 
-        <div className="flex flex-1 flex-col justify-between space-y-2 sm:space-y-3 px-3 sm:px-4 pb-3 sm:pb-4 pt-3 sm:pt-4">
+        {/* Product info */}
+        <div className="flex flex-1 flex-col gap-1.5 md:gap-2 p-2.5 md:p-3">
           <Link to={`/product/${product.id}`} className="block">
-            <h3 className="text-sm sm:text-base font-semibold leading-tight text-foreground transition-colors group-hover:text-primary line-clamp-2">
+            <h3 className="text-xs md:text-sm font-bold leading-tight text-foreground line-clamp-2 group-hover:text-primary transition-colors">
               {product.name}
             </h3>
           </Link>
-          <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.3em] text-muted-foreground">Extrait de parfum</p>
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-1 text-amber-400">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <Star key={i} className="size-[10px] sm:size-[11px] fill-current" />
-              ))}
-              <span className="text-[8px] sm:text-[9px] text-muted-foreground hidden xs:inline">(120)</span>
+          
+          {/* Price and rating */}
+          <div className="flex items-center justify-between gap-2 mt-auto">
+            <div className="text-sm md:text-base font-bold text-foreground">
+              {formatCurrency(product.price)}
             </div>
-            <div className="text-sm sm:text-base font-semibold text-foreground">{formatCurrency(product.price)}</div>
+            <div className="flex items-center gap-0.5 text-amber-400">
+              <Star className="size-3 md:size-3.5 fill-current" />
+              <span className="text-[10px] md:text-xs font-semibold text-foreground">5.0</span>
+            </div>
+          </div>
+
+          {/* Mobile add button */}
+          <div className="md:hidden mt-2">
+            <QuickAdd product={product} />
           </div>
         </div>
       </UiCardContent>
