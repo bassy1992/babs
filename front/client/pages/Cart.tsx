@@ -32,9 +32,23 @@ export default function Cart() {
   const total = subtotal + shipping + tax;
 
   return (
-    <main className="bg-gradient-to-b from-white via-white to-secondary/40">
-      <section className="container py-16 animate-fade-up">
-        <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between animate-fade-up animate-delay-1">
+    <main className="min-h-screen bg-gradient-to-b from-white via-white to-secondary/20">
+      {/* Mobile header */}
+      <div className="md:hidden sticky top-0 z-10 bg-white/95 backdrop-blur-sm border-b px-4 py-4">
+        <div className="flex items-center justify-between">
+          <Link to="/shop" className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground active:text-primary">
+            <ArrowLeft className="size-4" /> Shop
+          </Link>
+          <div className="text-sm font-semibold">
+            Cart ({totalItems})
+          </div>
+          <div className="w-16" /> {/* Spacer for centering */}
+        </div>
+      </div>
+
+      <section className="container px-4 py-6 md:py-16 animate-fade-up">
+        {/* Desktop header */}
+        <div className="hidden md:flex mb-10 flex-col gap-4 md:flex-row md:items-center md:justify-between animate-fade-up animate-delay-1">
           <div>
             <span className="text-xs uppercase tracking-[0.3em] text-primary">Your bag</span>
             <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Curate your ritual</h1>
@@ -45,73 +59,122 @@ export default function Cart() {
           </Link>
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] animate-fade-up animate-delay-2">
-          <div className="space-y-5">
+        <div className="grid gap-6 md:gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] animate-fade-up animate-delay-2">
+          <div className="space-y-3 md:space-y-5">
             {items.length === 0 ? (
-              <Card className="rounded-3xl border-dashed animate-fade-up animate-delay-2">
-                <CardContent className="p-12 text-center">
-                  <div className="text-xl font-semibold">Your cart is currently empty</div>
-                  <p className="mt-3 text-sm text-muted-foreground">
-                    Discover signature parfums and build your ritual in just a few clicks.
+              <Card className="rounded-2xl md:rounded-3xl border-dashed animate-fade-up animate-delay-2">
+                <CardContent className="p-8 md:p-12 text-center">
+                  <div className="text-lg md:text-xl font-semibold">Your cart is empty</div>
+                  <p className="mt-2 md:mt-3 text-sm text-muted-foreground">
+                    Discover signature parfums and build your ritual.
                   </p>
-                  <Button asChild size="lg" className="mt-6 rounded-full">
+                  <Button asChild size="lg" className="mt-4 md:mt-6 rounded-full w-full md:w-auto">
                     <Link to="/shop">Browse fragrances</Link>
                   </Button>
                 </CardContent>
               </Card>
             ) : (
-              <div className="space-y-5">
+              <div className="space-y-3 md:space-y-5">
                 {items.map((item, index) => {
                   const delayClass = index > 5 ? "animate-delay-5" : `animate-delay-${index + 1}`;
                   return (
                     <Card
                       key={item.id}
                       className={cn(
-                        "animate-fade-up overflow-hidden rounded-3xl border border-white/50 bg-white/80 backdrop-blur",
+                        "animate-fade-up overflow-hidden rounded-xl md:rounded-3xl border bg-white/90 backdrop-blur-sm",
                         delayClass,
-                        index === 0 && "ring-1 ring-primary/20",
+                        index === 0 && "md:ring-1 md:ring-primary/20",
                       )}
                     >
-                      <CardContent className="grid gap-6 p-6 md:grid-cols-[auto_1fr] md:items-center md:gap-8">
-                        <div className="relative h-36 w-36 overflow-hidden rounded-2xl bg-muted">
-                          <img src={item.image} alt={item.name} className="h-full w-full object-cover brightness-[0.9] saturate-[0.88]" loading="lazy" />
-                          <span className="absolute left-2 top-2 rounded-full bg-white/90 px-2 py-1 text-xs font-semibold">Qty {item.qty}</span>
-                        </div>
-
-                        <div className="flex flex-1 flex-col justify-between gap-5">
-                          <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-                            <div>
-                              <h2 className="text-base font-semibold text-foreground">{item.name}</h2>
-                              <p className="text-xs uppercase tracking-wide text-muted-foreground">Layering-ready extrait</p>
-                            </div>
-                            <div className="text-base font-semibold text-foreground">{formatCurrency(item.price * item.qty)}</div>
+                      <CardContent className="p-4 md:p-6">
+                        {/* Mobile layout */}
+                        <div className="md:hidden flex gap-3">
+                          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
+                            <img src={item.image} alt={item.name} className="h-full w-full object-cover" loading="lazy" />
                           </div>
 
-                          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                            <div className="inline-flex items-center rounded-full border border-primary/15 bg-white/60 p-1">
-                              <button
-                                className="px-4 py-2 text-sm"
-                                aria-label="Decrease quantity"
-                                onClick={() => updateQty(item.id, Math.max(1, item.qty - 1))}
-                              >
-                                -
-                              </button>
-                              <div className="w-12 text-center text-sm font-medium">{item.qty}</div>
-                              <button
-                                className="px-4 py-2 text-sm"
-                                aria-label="Increase quantity"
-                                onClick={() => updateQty(item.id, item.qty + 1)}
-                              >
-                                +
-                              </button>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-2 mb-2">
+                              <div className="flex-1 min-w-0">
+                                <h2 className="text-sm font-bold text-foreground truncate">{item.name}</h2>
+                                <p className="text-xs text-muted-foreground mt-0.5">Qty: {item.qty}</p>
+                              </div>
+                              <div className="text-sm font-bold text-foreground whitespace-nowrap">
+                                {formatCurrency(item.price * item.qty)}
+                              </div>
                             </div>
 
-                            <button
-                              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary"
-                              onClick={() => removeItem(item.id)}
-                            >
-                              <Trash className="size-4" /> Remove
-                            </button>
+                            <div className="flex items-center justify-between gap-2">
+                              <div className="inline-flex items-center rounded-lg border bg-background">
+                                <button
+                                  className="px-3 py-1.5 text-sm active:bg-accent"
+                                  aria-label="Decrease quantity"
+                                  onClick={() => updateQty(item.id, Math.max(1, item.qty - 1))}
+                                >
+                                  -
+                                </button>
+                                <div className="w-8 text-center text-sm font-medium">{item.qty}</div>
+                                <button
+                                  className="px-3 py-1.5 text-sm active:bg-accent"
+                                  aria-label="Increase quantity"
+                                  onClick={() => updateQty(item.id, item.qty + 1)}
+                                >
+                                  +
+                                </button>
+                              </div>
+
+                              <button
+                                className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground active:text-destructive"
+                                onClick={() => removeItem(item.id)}
+                              >
+                                <Trash className="size-3.5" /> Remove
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Desktop layout */}
+                        <div className="hidden md:grid gap-6 md:grid-cols-[auto_1fr] md:items-center md:gap-8">
+                          <div className="relative h-36 w-36 overflow-hidden rounded-2xl bg-muted">
+                            <img src={item.image} alt={item.name} className="h-full w-full object-cover brightness-[0.9] saturate-[0.88]" loading="lazy" />
+                            <span className="absolute left-2 top-2 rounded-full bg-white/90 px-2 py-1 text-xs font-semibold">Qty {item.qty}</span>
+                          </div>
+
+                          <div className="flex flex-1 flex-col justify-between gap-5">
+                            <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                              <div>
+                                <h2 className="text-base font-semibold text-foreground">{item.name}</h2>
+                                <p className="text-xs uppercase tracking-wide text-muted-foreground">Layering-ready extrait</p>
+                              </div>
+                              <div className="text-base font-semibold text-foreground">{formatCurrency(item.price * item.qty)}</div>
+                            </div>
+
+                            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                              <div className="inline-flex items-center rounded-full border border-primary/15 bg-white/60 p-1">
+                                <button
+                                  className="px-4 py-2 text-sm"
+                                  aria-label="Decrease quantity"
+                                  onClick={() => updateQty(item.id, Math.max(1, item.qty - 1))}
+                                >
+                                  -
+                                </button>
+                                <div className="w-12 text-center text-sm font-medium">{item.qty}</div>
+                                <button
+                                  className="px-4 py-2 text-sm"
+                                  aria-label="Increase quantity"
+                                  onClick={() => updateQty(item.id, item.qty + 1)}
+                                >
+                                  +
+                                </button>
+                              </div>
+
+                              <button
+                                className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary"
+                                onClick={() => removeItem(item.id)}
+                              >
+                                <Trash className="size-4" /> Remove
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </CardContent>
@@ -122,60 +185,68 @@ export default function Cart() {
             )}
           </div>
 
-          <aside className="space-y-6 animate-fade-up animate-delay-3">
-            <Card className="rounded-3xl border border-white/60 bg-white/90 backdrop-blur animate-fade-up animate-delay-2">
-              <CardContent className="space-y-5 p-8">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Subtotal</span>
-                  <span className="text-lg font-semibold">{formatCurrency(subtotal)}</span>
+          <aside className="space-y-4 md:space-y-6 animate-fade-up animate-delay-3">
+            {/* Order summary */}
+            <Card className="rounded-xl md:rounded-3xl border bg-white/95 backdrop-blur-sm animate-fade-up animate-delay-2">
+              <CardContent className="space-y-4 md:space-y-5 p-5 md:p-8">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Subtotal</span>
+                  <span className="font-semibold">{formatCurrency(subtotal)}</span>
                 </div>
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
-                  <span>Shipping</span>
-                  <span>{shipping === 0 ? "Complimentary" : formatCurrency(shipping)}</span>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Shipping</span>
+                  <span className="text-xs md:text-sm font-medium">{shipping === 0 ? "Free" : formatCurrency(shipping)}</span>
                 </div>
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
-                  <span>Estimated tax</span>
-                  <span>{formatCurrency(tax)}</span>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Tax</span>
+                  <span className="text-xs md:text-sm">{formatCurrency(tax)}</span>
                 </div>
-                <div className="border-t border-dashed pt-5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">Total</span>
-                    <span className="text-2xl font-semibold">{formatCurrency(total)}</span>
+                <div className="border-t border-dashed pt-4 md:pt-5">
+                  <div className="flex items-center justify-between mb-4 md:mb-6">
+                    <span className="text-sm font-medium text-muted-foreground">Total</span>
+                    <span className="text-xl md:text-2xl font-bold">{formatCurrency(total)}</span>
                   </div>
-                  <Button className="mt-6 w-full rounded-full py-6 text-sm font-semibold" onClick={() => navigate("/checkout")}>
-                    <CreditCard className="size-4" /> Proceed to checkout
+                  <Button 
+                    className="w-full rounded-full h-12 md:h-14 text-sm md:text-base font-semibold" 
+                    onClick={() => navigate("/checkout")}
+                    disabled={items.length === 0}
+                  >
+                    <CreditCard className="size-4 md:size-5" /> 
+                    <span className="ml-2">Checkout</span>
                   </Button>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="rounded-3xl border border-white/50 bg-white/70 backdrop-blur animate-fade-up animate-delay-3">
+            {/* Promo code - Desktop only */}
+            <Card className="hidden md:block rounded-3xl border bg-white/80 backdrop-blur-sm animate-fade-up animate-delay-3">
               <CardContent className="space-y-4 p-6">
-                <div className="text-sm font-semibold text-foreground">Redeem a code</div>
-                <div className="flex flex-wrap gap-2">
+                <div className="text-sm font-semibold text-foreground">Promo Code</div>
+                <div className="flex gap-2">
                   <input
-                    placeholder="Promo or gift code"
-                    className="flex-1 min-w-[180px] rounded-full border border-primary/20 bg-background px-4 py-2 text-sm"
+                    placeholder="Enter code"
+                    className="flex-1 rounded-full border border-primary/20 bg-background px-4 py-2 text-sm"
                   />
                   <Button variant="outline" className="rounded-full" type="button">
                     Apply
                   </Button>
                 </div>
                 <p className="text-xs leading-relaxed text-muted-foreground">
-                  Codes are single-use and cannot be combined. Applied discounts are reflected at review.
+                  Single-use codes only. Discounts shown at checkout.
                 </p>
               </CardContent>
             </Card>
 
-            <div className="grid gap-3 sm:grid-cols-3">
+            {/* Perks */}
+            <div className="grid gap-2.5 md:gap-3 grid-cols-1 md:grid-cols-3">
               {PERKS.map(({ icon: Icon, title, copy }, index) => {
                 const delayClass = index > 2 ? "animate-delay-5" : `animate-delay-${index + 2}`;
                 return (
-                  <Card key={title} className={cn("rounded-2xl border border-primary/10 bg-white/60 animate-fade-up", delayClass)}>
-                    <CardContent className="space-y-2 p-4">
-                      <Icon className="size-5 text-primary" />
-                      <div className="text-sm font-semibold text-foreground">{title}</div>
-                      <p className="text-xs text-muted-foreground leading-relaxed">{copy}</p>
+                  <Card key={title} className={cn("rounded-lg md:rounded-2xl border border-primary/10 bg-white/70 animate-fade-up", delayClass)}>
+                    <CardContent className="space-y-1.5 md:space-y-2 p-3 md:p-4">
+                      <Icon className="size-4 md:size-5 text-primary" />
+                      <div className="text-xs md:text-sm font-bold text-foreground">{title}</div>
+                      <p className="text-[10px] md:text-xs text-muted-foreground leading-relaxed">{copy}</p>
                     </CardContent>
                   </Card>
                 );
@@ -184,6 +255,31 @@ export default function Cart() {
           </aside>
         </div>
       </section>
+
+      {/* Mobile sticky checkout bar */}
+      {items.length > 0 && (
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-20 bg-white border-t shadow-lg">
+          <div className="px-4 py-3">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <div className="text-xs text-muted-foreground">Total</div>
+                <div className="text-xl font-bold">{formatCurrency(total)}</div>
+              </div>
+              <Button 
+                className="rounded-full h-11 px-6 font-semibold" 
+                onClick={() => navigate("/checkout")}
+              >
+                Checkout
+              </Button>
+            </div>
+            {shipping > 0 && (
+              <div className="text-[10px] text-center text-muted-foreground">
+                Add {formatCurrency(150 - subtotal)} more for free shipping
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </main>
   );
 }
