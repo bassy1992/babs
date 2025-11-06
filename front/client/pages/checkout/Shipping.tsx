@@ -31,75 +31,100 @@ export default function Shipping() {
   };
 
   return (
-    <div className="max-w-2xl">
-      <h2 className="text-lg font-semibold">Shipping address</h2>
-      <form onSubmit={handleSubmit} className="mt-4 space-y-3">
-        <div>
-          <label className="block text-sm font-medium mb-1">Full Name *</label>
-          <input 
-            required 
-            name="full_name"
-            value={formData.full_name}
-            onChange={handleChange}
-            placeholder="John Doe" 
-            className="w-full rounded-md border px-3 py-2" 
-          />
-        </div>
-        
-        <div>
-          <label className="block text-sm font-medium mb-1">Email *</label>
-          <input 
-            required 
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="john@example.com" 
-            className="w-full rounded-md border px-3 py-2" 
-          />
-        </div>
-        
-        <div>
-          <label className="block text-sm font-medium mb-1">Address *</label>
-          <input 
-            required 
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            placeholder="123 Main Street" 
-            className="w-full rounded-md border px-3 py-2" 
-          />
-        </div>
-        
-        <div className="flex gap-2">
-          <div className="flex-1">
-            <label className="block text-sm font-medium mb-1">City *</label>
+    <div className="animate-fade-up">
+      <div className="mb-6 md:mb-8">
+        <h2 className="text-xl md:text-2xl font-bold">Shipping Information</h2>
+        <p className="text-sm text-muted-foreground mt-1">Where should we deliver your order?</p>
+      </div>
+      
+      <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-semibold mb-2">Full Name *</label>
             <input 
               required 
-              name="city"
-              value={formData.city}
+              name="full_name"
+              value={formData.full_name}
               onChange={handleChange}
-              placeholder="Accra" 
-              className="w-full rounded-md border px-3 py-2" 
+              placeholder="John Doe" 
+              className="w-full rounded-lg border-2 px-4 py-3 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
             />
           </div>
-          <div className="flex-1">
-            <label className="block text-sm font-medium mb-1">Postal Code</label>
+          
+          <div>
+            <label className="block text-sm font-semibold mb-2">Email Address *</label>
             <input 
-              name="postal_code"
-              value={formData.postal_code}
+              required 
+              type="email"
+              name="email"
+              value={formData.email}
               onChange={handleChange}
-              placeholder="00233" 
-              className="w-full rounded-md border px-3 py-2" 
+              placeholder="john@example.com" 
+              className="w-full rounded-lg border-2 px-4 py-3 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
             />
+            <p className="text-xs text-muted-foreground mt-1.5">Order confirmation will be sent here</p>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-semibold mb-2">Street Address *</label>
+            <input 
+              required 
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              placeholder="123 Main Street, Apt 4B" 
+              className="w-full rounded-lg border-2 px-4 py-3 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
+            />
+          </div>
+          
+          <div className="grid grid-cols-2 gap-3 md:gap-4">
+            <div>
+              <label className="block text-sm font-semibold mb-2">City *</label>
+              <input 
+                required 
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                placeholder="Accra" 
+                className="w-full rounded-lg border-2 px-4 py-3 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold mb-2">Postal Code</label>
+              <input 
+                name="postal_code"
+                value={formData.postal_code}
+                onChange={handleChange}
+                placeholder="00233" 
+                className="w-full rounded-lg border-2 px-4 py-3 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all" 
+              />
+            </div>
           </div>
         </div>
         
-        <div className="flex items-center justify-between pt-4">
-          <Button type="submit" size="lg">Continue to Payment</Button>
-          <Button type="button" variant="outline" size="lg" onClick={() => navigate(-1)}>Cancel</Button>
+        {/* Mobile buttons */}
+        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t p-4 space-y-2">
+          <Button type="submit" size="lg" className="w-full h-12 font-semibold">
+            Continue to Payment
+          </Button>
+          <Button type="button" variant="ghost" size="lg" className="w-full" onClick={() => navigate(-1)}>
+            Cancel
+          </Button>
+        </div>
+
+        {/* Desktop buttons */}
+        <div className="hidden md:flex items-center gap-3 pt-4">
+          <Button type="submit" size="lg" className="flex-1 h-12 font-semibold">
+            Continue to Payment
+          </Button>
+          <Button type="button" variant="outline" size="lg" onClick={() => navigate(-1)}>
+            Cancel
+          </Button>
         </div>
       </form>
+      
+      {/* Spacer for mobile fixed buttons */}
+      <div className="md:hidden h-32" />
     </div>
   );
 }

@@ -115,86 +115,127 @@ export default function Review() {
   };
 
   return (
-    <div className="max-w-2xl">
-      <h2 className="text-lg font-semibold">Review your order</h2>
+    <div className="animate-fade-up pb-32 md:pb-0">
+      <div className="mb-6 md:mb-8">
+        <h2 className="text-xl md:text-2xl font-bold">Review & Pay</h2>
+        <p className="text-sm text-muted-foreground mt-1">Confirm your order details before payment</p>
+      </div>
       
       {error && (
-        <div className="mt-4 rounded-md bg-destructive/10 border border-destructive/20 p-4">
-          <p className="text-sm text-destructive">{error}</p>
+        <div className="mb-4 rounded-lg bg-destructive/10 border-2 border-destructive/20 p-4">
+          <p className="text-sm font-medium text-destructive">{error}</p>
         </div>
       )}
 
-      <div className="mt-4 space-y-4">
+      <div className="space-y-4 md:space-y-5">
         {/* Shipping Info */}
-        <div className="rounded-md border p-4">
-          <h3 className="font-semibold mb-2">Shipping Information</h3>
-          <div className="text-sm space-y-1">
-            <p><strong>Name:</strong> {shippingInfo.full_name || 'Not provided'}</p>
-            <p><strong>Email:</strong> {shippingInfo.email || 'Not provided'}</p>
-            <p><strong>Address:</strong> {shippingInfo.address || 'Not provided'}</p>
-            <p><strong>City:</strong> {shippingInfo.city || 'Not provided'}</p>
+        <div className="rounded-xl border-2 bg-white p-4 md:p-5">
+          <h3 className="font-bold text-sm md:text-base mb-3">Delivery Address</h3>
+          <div className="text-xs md:text-sm space-y-2">
+            <div className="flex gap-2">
+              <span className="text-muted-foreground min-w-[60px]">Name:</span>
+              <span className="font-medium">{shippingInfo.full_name || 'Not provided'}</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="text-muted-foreground min-w-[60px]">Email:</span>
+              <span className="font-medium break-all">{shippingInfo.email || 'Not provided'}</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="text-muted-foreground min-w-[60px]">Address:</span>
+              <span className="font-medium">{shippingInfo.address || 'Not provided'}</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="text-muted-foreground min-w-[60px]">City:</span>
+              <span className="font-medium">{shippingInfo.city || 'Not provided'}</span>
+            </div>
           </div>
         </div>
 
         {/* Order Items */}
-        <div className="rounded-md border p-4">
-          <h3 className="font-semibold mb-3">Order Items</h3>
+        <div className="rounded-xl border-2 bg-white p-4 md:p-5">
+          <h3 className="font-bold text-sm md:text-base mb-3">Order Summary</h3>
           {items.length === 0 ? (
-            <div className="text-center py-4 text-muted-foreground">Your cart is empty</div>
+            <div className="text-center py-8 text-sm text-muted-foreground">Your cart is empty</div>
           ) : (
             <div className="space-y-3">
               {items.map((it) => (
-                <div key={it.id} className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <img src={it.image} className="h-10 w-10 rounded object-cover" alt={it.name} />
-                    <div>
-                      <div className="font-medium">{it.name}</div>
-                      <div className="text-sm text-muted-foreground">Qty: {it.qty}</div>
-                    </div>
+                <div key={it.id} className="flex items-center gap-3">
+                  <img src={it.image} className="h-12 w-12 md:h-14 md:w-14 rounded-lg object-cover shrink-0" alt={it.name} />
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold text-sm truncate">{it.name}</div>
+                    <div className="text-xs text-muted-foreground">Qty: {it.qty}</div>
                   </div>
-                  <div className="font-medium">{formatCurrency(it.price * it.qty)}</div>
+                  <div className="font-bold text-sm whitespace-nowrap">{formatCurrency(it.price * it.qty)}</div>
                 </div>
               ))}
             </div>
           )}
 
-          <div className="mt-4 space-y-2 border-t pt-4">
+          <div className="mt-4 space-y-2.5 border-t-2 border-dashed pt-4">
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Subtotal</span>
-              <span>{formatCurrency(subtotal)}</span>
+              <span className="font-medium">{formatCurrency(subtotal)}</span>
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Shipping</span>
-              <span>{shipping === 0 ? 'Free' : formatCurrency(shipping)}</span>
+              <span className="font-medium">{shipping === 0 ? 'Free' : formatCurrency(shipping)}</span>
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Tax (8%)</span>
-              <span>{formatCurrency(tax)}</span>
+              <span className="font-medium">{formatCurrency(tax)}</span>
             </div>
-            <div className="flex items-center justify-between border-t pt-2">
-              <span className="font-semibold">Total</span>
-              <span className="text-xl font-bold">{formatCurrency(total)}</span>
+            <div className="flex items-center justify-between border-t-2 pt-3">
+              <span className="font-bold text-base">Total</span>
+              <span className="text-xl md:text-2xl font-bold text-primary">{formatCurrency(total)}</span>
             </div>
           </div>
         </div>
 
         {/* Payment Info */}
-        <div className="rounded-md border border-primary/20 bg-primary/5 p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none">
-              <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3v-8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <h3 className="font-semibold">Payment via Paystack</h3>
+        <div className="rounded-xl border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10 p-4 md:p-5">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="size-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+              <svg className="h-5 w-5 text-primary" viewBox="0 0 24 24" fill="none">
+                <path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3v-8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <h3 className="font-bold text-sm md:text-base">Paystack Payment</h3>
           </div>
-          <p className="text-sm text-muted-foreground">
-            You will be redirected to Paystack to complete your payment securely. 
-            Accepted: Cards, Mobile Money, Bank Transfer
+          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+            Secure payment via Paystack. Accepts Cards, Mobile Money & Bank Transfer.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        {/* Mobile sticky payment button */}
+        <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg p-4 z-20">
           <Button 
-            className="flex-1" 
+            className="w-full h-12 font-bold text-base" 
+            size="lg"
+            onClick={placeOrder}
+            disabled={isProcessing || items.length === 0}
+          >
+            {isProcessing ? (
+              <>
+                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                Processing...
+              </>
+            ) : (
+              `Pay ${formatCurrency(total)}`
+            )}
+          </Button>
+          <button
+            className="w-full mt-2 text-sm text-muted-foreground active:text-foreground"
+            onClick={() => navigate(-1)}
+            disabled={isProcessing}
+          >
+            Back to Payment
+          </button>
+        </div>
+
+        {/* Desktop buttons */}
+        <div className="hidden md:flex items-center gap-3">
+          <Button 
+            className="flex-1 h-12 font-bold" 
             size="lg"
             onClick={placeOrder}
             disabled={isProcessing || items.length === 0}
