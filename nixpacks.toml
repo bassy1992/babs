@@ -1,13 +1,17 @@
+[project]
+# Tell Nixpacks this is a Python project
+language = "python"
+app-root = "back"  # <-- points to your Django backend
+
 [phases.setup]
-# Install Python 3.11 and pip
+# Optional: install specific Python version
 nixPkgs = ["python311", "python311Packages.pip"]
 
 [phases.install]
 cmds = [
-  "cd back && pip install --upgrade pip",
-  "cd back && pip install -r requirements.txt"
+  "pip install --upgrade pip",
+  "pip install -r requirements.txt"
 ]
 
 [start]
-# Use 'python' instead of 'python3' in start.sh
 cmd = "bash start.sh"
