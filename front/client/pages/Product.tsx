@@ -174,27 +174,27 @@ export default function Product() {
   };
 
   return (
-    <main className="space-y-16">
-      <section className="container py-8 md:py-16 lg:py-20 animate-fade-up">
+    <main className="space-y-12 md:space-y-16">
+      <section className="container px-4 py-6 md:py-16 lg:py-20 animate-fade-up">
         <script type="application/ld+json">{JSON.stringify(ldJson)}</script>
-        <div className="mb-6 md:mb-8 text-xs uppercase tracking-wide text-muted-foreground">
+        <div className="mb-4 md:mb-8 text-xs uppercase tracking-wide text-muted-foreground">
           <Link to="/shop" className="hover:text-primary">
             Shop
           </Link>{" "}
-          / <span className="truncate">{product.name}</span>
+          / <span className="truncate max-w-[200px] inline-block align-bottom">{product.name}</span>
         </div>
-        <div className="grid gap-8 lg:gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1fr)]">
-          <div className="flex flex-col gap-4 md:flex-row">
-            <div className="order-2 flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory md:order-1 md:flex-col md:overflow-visible md:pb-0 md:w-20">
+        <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1fr)]">
+          <div className="flex flex-col gap-3 md:gap-4 md:flex-row">
+            <div className="order-2 flex gap-2 md:gap-3 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide md:order-1 md:flex-col md:overflow-visible md:pb-0 md:w-20">
               {product.gallery.map((image) => (
                 <button
                   key={image}
                   type="button"
                   onClick={() => setActiveImage(image)}
                   className={cn(
-                    "relative h-16 w-16 md:h-20 md:w-20 shrink-0 snap-center overflow-hidden rounded-xl md:rounded-2xl border transition",
+                    "relative h-14 w-14 md:h-20 md:w-20 shrink-0 snap-center overflow-hidden rounded-lg md:rounded-2xl border-2 transition-all",
                     activeImage === image
-                      ? "border-primary shadow"
+                      ? "border-primary shadow-md scale-105"
                       : "border-transparent hover:border-primary/60",
                   )}
                 >
@@ -207,7 +207,7 @@ export default function Product() {
                 </button>
               ))}
             </div>
-            <div className="order-1 flex-1 aspect-square md:aspect-[4/5] overflow-hidden rounded-2xl md:rounded-[32px] bg-muted shadow-xl">
+            <div className="order-1 flex-1 aspect-square md:aspect-[4/5] overflow-hidden rounded-xl md:rounded-[32px] bg-muted shadow-lg md:shadow-xl">
               <img
                 src={activeImage}
                 alt={product.name}
@@ -217,79 +217,79 @@ export default function Product() {
             </div>
           </div>
 
-          <div className="space-y-6 md:space-y-8">
-            <div className="space-y-3 md:space-y-4">
+          <div className="space-y-5 md:space-y-8">
+            <div className="space-y-2 md:space-y-4">
               {product.rating && (
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Star className="size-4 fill-primary text-primary" />
-                  <span>{product.rating.average.toFixed(1)}</span>
-                  <span>({product.rating.count} reviews)</span>
+                <div className="flex items-center gap-1.5 text-xs md:text-sm text-muted-foreground">
+                  <Star className="size-3.5 md:size-4 fill-primary text-primary" />
+                  <span className="font-medium">{product.rating.average.toFixed(1)}</span>
+                  <span className="text-muted-foreground/70">({product.rating.count})</span>
                 </div>
               )}
-              <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
+              <h1 className="text-2xl font-semibold tracking-tight leading-tight sm:text-3xl lg:text-4xl">
                 {product.name}
               </h1>
               <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{product.description}</p>
-              <div className="flex items-center gap-3">
-                <span className="text-xl md:text-2xl font-semibold">{formatCurrency(parseFloat(variant?.price || product.price))}</span>
-                {variant?.label && <span className="text-sm text-muted-foreground">{variant.label}</span>}
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl md:text-3xl font-bold">{formatCurrency(parseFloat(variant?.price || product.price))}</span>
+                {variant?.label && <span className="text-xs md:text-sm text-muted-foreground">/ {variant.label}</span>}
               </div>
             </div>
 
             <div className="space-y-3 md:space-y-4">
-              <div className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                Choose your format
+              <div className="text-xs md:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                Select Size
               </div>
-              <div className="grid gap-2 md:gap-3 grid-cols-1 sm:grid-cols-3">
+              <div className="grid gap-2 md:gap-3 grid-cols-3">
                 {product.sizes?.map((size: any) => (
                   <button
                     key={size.volume}
                     type="button"
                     onClick={() => setSelectedSize(size.volume)}
                     className={cn(
-                      "rounded-xl md:rounded-2xl border px-3 py-2 md:px-4 md:py-3 text-left transition",
+                      "rounded-lg md:rounded-xl border-2 px-2 py-2.5 md:px-4 md:py-3 text-left transition-all",
                       selectedSize === size.volume
-                        ? "border-primary bg-primary/5"
-                        : "border-border hover:border-primary/60",
+                        ? "border-primary bg-primary/5 shadow-sm"
+                        : "border-border hover:border-primary/60 hover:bg-accent/50",
                     )}
                     aria-pressed={selectedSize === size.volume}
                   >
-                    <div className="text-sm font-semibold text-foreground">{size.label}</div>
-                    <div className="text-xs text-muted-foreground">{formatCurrency(parseFloat(size.price))}</div>
+                    <div className="text-xs md:text-sm font-semibold text-foreground truncate">{size.label}</div>
+                    <div className="text-[10px] md:text-xs text-muted-foreground mt-0.5">{formatCurrency(parseFloat(size.price))}</div>
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-              <Button size="lg" className="flex-1 h-12" onClick={handleAddToCart}>
-                Add to cart
+            <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3">
+              <Button size="lg" className="flex-1 h-11 md:h-12 text-sm md:text-base font-semibold" onClick={handleAddToCart}>
+                Add to Cart
               </Button>
-              <div className="flex gap-2 sm:gap-3 justify-center sm:justify-start">
+              <div className="flex gap-2 justify-center sm:justify-start">
                 <button
                   type="button"
-                  className="inline-flex size-10 sm:size-11 items-center justify-center rounded-full border" 
+                  className="inline-flex size-11 md:size-12 items-center justify-center rounded-full border-2 hover:border-primary/60 hover:bg-accent/50 transition-all" 
                   aria-label="Add to wishlist"
                 >
-                  <Heart className="size-4 sm:size-5" />
+                  <Heart className="size-4 md:size-5" />
                 </button>
                 <button
                   type="button"
-                  className="inline-flex size-10 sm:size-11 items-center justify-center rounded-full border"
+                  className="inline-flex size-11 md:size-12 items-center justify-center rounded-full border-2 hover:border-primary/60 hover:bg-accent/50 transition-all"
                   aria-label="Share scent"
                 >
-                  <Share2 className="size-4 sm:size-5" />
+                  <Share2 className="size-4 md:size-5" />
                 </button>
               </div>
             </div>
 
-            <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-3">
+            <div className="grid gap-2.5 md:gap-4 grid-cols-1 sm:grid-cols-3">
               {SERVICE_POINTS.map(({ icon: Icon, title, copy }) => (
-                <Card key={title} className="border-dashed">
-                  <CardContent className="space-y-2 p-3 md:p-4">
+                <Card key={title} className="border-dashed hover:border-primary/30 transition-colors">
+                  <CardContent className="space-y-1.5 md:space-y-2 p-3 md:p-4">
                     <Icon className="size-4 md:size-5 text-primary" />
-                    <div className="text-xs md:text-sm font-semibold text-foreground">{title}</div>
-                    <p className="text-xs leading-relaxed text-muted-foreground">{copy}</p>
+                    <div className="text-xs md:text-sm font-semibold text-foreground leading-tight">{title}</div>
+                    <p className="text-[10px] md:text-xs leading-relaxed text-muted-foreground">{copy}</p>
                   </CardContent>
                 </Card>
               ))}
