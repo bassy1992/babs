@@ -27,6 +27,46 @@
 }
 
 @layer base {
+  /* Prevent zoom issues on mobile devices */
+  * {
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  
+  html {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    /* Prevent iOS Safari zoom on orientation change */
+    -webkit-text-size-adjust: 100%;
+  }
+  
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Prevent iOS bounce scroll */
+    overscroll-behavior-y: none;
+  }
+  
+  /* Prevent input zoom on iOS/Android - minimum 16px font size */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="search"],
+  input[type="password"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+  
+  /* Prevent iOS Safari from zooming on double tap */
+  button,
+  a {
+    touch-action: manipulation;
+  }
+  
   /**
    * Tailwind CSS theme
    * tailwind.config.ts expects the following color variables to be expressed as HSL values.
