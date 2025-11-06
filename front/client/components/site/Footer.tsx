@@ -14,137 +14,89 @@ const logoUrl =
 export function Footer() {
   return (
     <footer className="border-t bg-white">
-      <div className="container py-8 sm:py-10 animate-fade-up">
-        <div className="grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
-          <div className="space-y-3 sm:space-y-4 animate-fade-up animate-delay-1 sm:col-span-2 lg:col-span-1">
-            <img src={logoUrl} alt="Brand logo" className="h-8 sm:h-10 w-auto" />
-            <p className="max-w-sm text-responsive-sm text-muted-foreground">
-              Elevated scents and rituals crafted in small batches for moments of quiet luxury.
+      <div className="container py-6 md:py-8">
+        <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {/* Brand */}
+          <div className="space-y-3">
+            <img src={logoUrl} alt="Essentials by Baabie" className="h-7 md:h-8 w-auto" />
+            <p className="text-xs md:text-sm text-muted-foreground max-w-xs">
+              Elevated scents crafted in small batches.
             </p>
-            <div className="flex items-center gap-2 sm:gap-3 text-xs text-muted-foreground">
-              <span className="inline-flex size-7 sm:size-8 items-center justify-center rounded-full border text-[10px] sm:text-xs">GH</span>
-              <div>
-                <div className="font-medium text-foreground text-xs sm:text-sm">GT-090-4335</div>
-                <div className="text-xs sm:text-sm">Tema Community, Ghana</div>
-              </div>
-            </div>
           </div>
 
-          <div className="space-y-3 animate-fade-up animate-delay-2">
-            <h4 className="text-[10px] sm:text-xs font-semibold uppercase tracking-wide text-muted-foreground">Shop</h4>
-            <ul className="space-y-2 text-responsive-sm text-foreground/80">
-              <li>
-                <Link to="/shop" className="transition-colors hover:text-primary active:text-primary">
-                  All products
-                </Link>
-              </li>
-              <li>
-                <Link to="/collections" className="transition-colors hover:text-primary active:text-primary">
-                  Collections
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="transition-colors hover:text-primary active:text-primary">
-                  About us
-                </Link>
-              </li>
+          {/* Quick Links */}
+          <div className="space-y-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">Shop</h4>
+            <ul className="space-y-1.5 text-xs md:text-sm text-muted-foreground">
+              <li><Link to="/shop" className="hover:text-primary transition-colors">All Products</Link></li>
+              <li><Link to="/collections" className="hover:text-primary transition-colors">Collections</Link></li>
+              <li><Link to="/about" className="hover:text-primary transition-colors">About</Link></li>
             </ul>
           </div>
 
-          <div className="space-y-3 animate-fade-up animate-delay-3">
-            <h4 className="text-[10px] sm:text-xs font-semibold uppercase tracking-wide text-muted-foreground">Support</h4>
-            <ul className="space-y-2 text-responsive-sm text-foreground/80">
-              <li>
-                <Link to="#" className="transition-colors hover:text-primary active:text-primary">
-                  Shipping & returns
-                </Link>
-              </li>
-              <li>
-                <Link to="#" className="transition-colors hover:text-primary active:text-primary">
-                  Gift cards
-                </Link>
-              </li>
-              <li>
-                <Link to="#" className="transition-colors hover:text-primary active:text-primary">
-                  Concierge
-                </Link>
-              </li>
+          {/* Support */}
+          <div className="space-y-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">Support</h4>
+            <ul className="space-y-1.5 text-xs md:text-sm text-muted-foreground">
+              <li><Link to="#" className="hover:text-primary transition-colors">Shipping</Link></li>
+              <li><Link to="#" className="hover:text-primary transition-colors">Returns</Link></li>
+              <li><Link to="#" className="hover:text-primary transition-colors">Contact</Link></li>
             </ul>
           </div>
 
-          <div className="space-y-3 sm:space-y-4 animate-fade-up animate-delay-4 sm:col-span-2 lg:col-span-1">
-            <h4 className="text-[10px] sm:text-xs font-semibold uppercase tracking-wide text-muted-foreground">Stay in touch</h4>
-            <p className="text-responsive-sm text-muted-foreground">
-              Subscribe for early access to limited releases and private events.
-            </p>
-            <form
-              className="flex items-center gap-2 rounded-full border bg-background px-3 py-2"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <Mail className="size-3 sm:size-4 text-muted-foreground flex-shrink-0" />
-              <input
-                type="email"
-                required
-                placeholder="Your email"
-                className="w-full bg-transparent text-xs sm:text-sm outline-none min-w-0"
-              />
-              <button
-                type="submit"
-                className="rounded-full bg-primary px-3 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs font-semibold uppercase tracking-wide text-primary-foreground hover:bg-primary/90 active:scale-95 transition-all flex-shrink-0"
-              >
-                Join
-              </button>
-            </form>
-            <div className="flex gap-2 sm:gap-3 text-muted-foreground">
+          {/* Social */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">Connect</h4>
+            <div className="flex gap-2">
               <a 
                 href="https://www.instagram.com/barbies_essentials/" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 aria-label="Instagram" 
-                className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full border transition-colors hover:border-primary hover:text-primary active:scale-95"
+                className="inline-flex size-8 items-center justify-center rounded-full border hover:border-primary hover:text-primary transition-all"
               >
-                <Instagram className="size-3 sm:size-4" />
+                <Instagram className="size-3.5" />
               </a>
               <a 
                 href="https://www.facebook.com/Barbies%20Essentials" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 aria-label="Facebook" 
-                className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full border transition-colors hover:border-primary hover:text-primary active:scale-95"
+                className="inline-flex size-8 items-center justify-center rounded-full border hover:border-primary hover:text-primary transition-all"
               >
-                <Facebook className="size-3 sm:size-4" />
+                <Facebook className="size-3.5" />
               </a>
               <a 
                 href="https://www.tiktok.com/@mizz_mirielle" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 aria-label="TikTok" 
-                className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full border transition-colors hover:border-primary hover:text-primary active:scale-95"
+                className="inline-flex size-8 items-center justify-center rounded-full border hover:border-primary hover:text-primary transition-all"
               >
-                <TikTokIcon className="size-3 sm:size-4" />
+                <TikTokIcon className="size-3.5" />
               </a>
               <a 
                 href="https://api.whatsapp.com/send/?phone=233547936812&text&type=phone_number&app_absent=0" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 aria-label="WhatsApp" 
-                className="inline-flex size-8 sm:size-9 items-center justify-center rounded-full border transition-colors hover:border-primary hover:text-primary active:scale-95"
+                className="inline-flex size-8 items-center justify-center rounded-full border hover:border-primary hover:text-primary transition-all"
               >
-                <MessageCircle className="size-3 sm:size-4" />
+                <MessageCircle className="size-3.5" />
               </a>
             </div>
+            <p className="text-xs text-muted-foreground">Tema, Ghana</p>
           </div>
         </div>
       </div>
-      <div className="border-t py-3 sm:py-4">
-        <div className="container flex flex-col items-center justify-between gap-2 sm:gap-3 text-[10px] sm:text-xs text-muted-foreground md:flex-row animate-fade-up animate-delay-2">
-          <div>© {new Date().getFullYear()} Essentials by Baabie. All rights reserved.</div>
-          <div className="flex items-center gap-2 flex-wrap justify-center">
-            <Link to="#" className="transition-colors hover:text-primary active:text-primary">Privacy</Link>
-            <span className="text-foreground/40">•</span>
-            <Link to="#" className="transition-colors hover:text-primary active:text-primary">Terms</Link>
-            <span className="text-foreground/40">•</span>
-            <Link to="#" className="transition-colors hover:text-primary active:text-primary">Accessibility</Link>
+      
+      {/* Bottom bar */}
+      <div className="border-t py-3">
+        <div className="container flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-muted-foreground">
+          <div>© {new Date().getFullYear()} Essentials by Baabie</div>
+          <div className="flex items-center gap-3">
+            <Link to="#" className="hover:text-primary transition-colors">Privacy</Link>
+            <Link to="#" className="hover:text-primary transition-colors">Terms</Link>
           </div>
         </div>
       </div>
