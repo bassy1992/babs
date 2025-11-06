@@ -66,14 +66,17 @@ import dj_database_url
 import os
 
 # Database configuration
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL', f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
-        conn_max_age=600,
-        conn_health_checks=True,
-        ssl_require=True  # Important for hosted PostgreSQL (Railway, Render, etc.)
-    )
-}
+db_config = dj_database_url.config(
+    default=os.environ.get('DATABASE_URL', f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
+    conn_max_age=600,
+    conn_health_checks=True,
+)
+
+# Only require SSL for PostgreSQL connections
+if db_config.get('ENGINE') == 'django.db.backends.postgresql':
+    db_config['OPTIONS'] = {'sslmode': 'require'}
+
+DATABASES = {'default': db_config}
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
