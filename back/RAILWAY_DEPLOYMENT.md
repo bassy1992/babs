@@ -17,19 +17,22 @@ Your backend already has all necessary Railway configuration:
 
 ### 1. Create Railway Project
 
+**Important:** Your project has a monorepo structure with `back/` and `front/` folders. Railway needs special configuration.
+
 ```bash
 # Option A: Using Railway CLI
 railway login
-cd back
 railway init
 railway up
 
-# Option B: Using Railway Dashboard
+# Option B: Using Railway Dashboard (Recommended)
 # Go to https://railway.app
 # Click "New Project" → "Deploy from GitHub repo"
 # Select your repository
-# Set root directory to "back"
+# Railway will use the nixpacks.toml configuration at root
 ```
+
+**Note:** The `nixpacks.toml` file at the root tells Railway to build from the `back/` directory.
 
 ### 2. Add PostgreSQL Database
 
@@ -128,12 +131,19 @@ Your `settings.py` uses `dj-database-url` which automatically reads Railway's `D
 ```python
 DATABASES = {
     'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",  # Fallback for local dev
+        default=os.environ.get('DATABASE_URL', f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
         conn_max_age=600,
         conn_health_checks=True,
+        ssl_require=True  # Required for hosted PostgreSQL
     )
 }
 ```
+
+This configuration:
+- Uses PostgreSQL when `DATABASE_URL` is set (Railway/production)
+- Falls back to SQLite for local development
+- Enables SSL for secure database connections
+- Maintains connection pooling for better performance
 
 ### Static Files
 
