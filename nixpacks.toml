@@ -2,4 +2,7 @@
 aptPkgs = ["libjpeg-dev", "zlib1g-dev"]
 
 [phases.build]
-cmds = ["cd back && python manage.py collectstatic --noinput"]
+cmds = [
+  "cd back && mkdir -p staticfiles",
+  "cd back && python manage.py collectstatic --noinput --clear"
+]
