@@ -3,15 +3,13 @@ nixPkgs = ["python311", "python311Packages.pip"]
 
 [phases.install]
 cmds = [
-  "cd back",
   "pip install --upgrade pip",
-  "pip install -r requirements.txt"
+  "pip install -r back/requirements.txt"
 ]
 
 [phases.build]
 cmds = [
-  "cd back",
-  "python manage.py collectstatic --noinput"
+  "cd back && python manage.py collectstatic --noinput"
 ]
 
 [start]
