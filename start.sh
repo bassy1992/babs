@@ -1,7 +1,13 @@
 #!/bin/bash
-set -e
+set -e  # Stop if any command fails
 
-# Since app-root is set to "back", we're already in the back directory
+cd back  # go into Django backend
+
+# Apply migrations
 python manage.py migrate --noinput
+
+# Collect static files
 python manage.py collectstatic --noinput
+
+# Start Gunicorn
 gunicorn config.wsgi:application --bind 0.0.0.0:${PORT:-8000}
