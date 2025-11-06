@@ -174,27 +174,69 @@ export default function Product() {
   };
 
   return (
-    <main className="space-y-12 md:space-y-16">
-      <section className="container px-4 py-6 md:py-16 lg:py-20 animate-fade-up">
-        <script type="application/ld+json">{JSON.stringify(ldJson)}</script>
-        <div className="mb-4 md:mb-8 text-xs uppercase tracking-wide text-muted-foreground">
+    <main className="min-h-screen">
+      <script type="application/ld+json">{JSON.stringify(ldJson)}</script>
+      
+      {/* Mobile: Full-width image gallery */}
+      <section className="md:hidden relative">
+        <div className="relative aspect-[3/4] bg-muted">
+          <img
+            src={activeImage}
+            alt={product.name}
+            className="h-full w-full object-cover"
+            loading="eager"
+          />
+          {/* Image counter */}
+          <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full">
+            {product.gallery.findIndex(img => img === activeImage) + 1} / {product.gallery.length}
+          </div>
+        </div>
+        
+        {/* Thumbnail strip */}
+        <div className="flex gap-2 overflow-x-auto px-4 py-3 snap-x snap-mandatory scrollbar-hide bg-background/95 backdrop-blur-sm border-b">
+          {product.gallery.map((image) => (
+            <button
+              key={image}
+              type="button"
+              onClick={() => setActiveImage(image)}
+              className={cn(
+                "relative h-16 w-16 shrink-0 snap-center overflow-hidden rounded-lg border-2 transition-all",
+                activeImage === image
+                  ? "border-primary ring-2 ring-primary/20"
+                  : "border-border/50 opacity-60",
+              )}
+            >
+              <img
+                src={image}
+                alt={`${product.name} thumbnail`}
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* Desktop: Side-by-side layout */}
+      <section className="hidden md:block container px-4 py-16 lg:py-20 animate-fade-up">
+        <div className="mb-8 text-xs uppercase tracking-wide text-muted-foreground">
           <Link to="/shop" className="hover:text-primary">
             Shop
           </Link>{" "}
           / <span className="truncate max-w-[200px] inline-block align-bottom">{product.name}</span>
         </div>
-        <div className="grid gap-6 md:gap-8 lg:gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1fr)]">
-          <div className="flex flex-col gap-3 md:gap-4 md:flex-row">
-            <div className="order-2 flex gap-2 md:gap-3 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide md:order-1 md:flex-col md:overflow-visible md:pb-0 md:w-20">
+        <div className="grid gap-8 lg:gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1fr)]">
+          <div className="flex gap-4">
+            <div className="flex flex-col gap-3 w-20">
               {product.gallery.map((image) => (
                 <button
                   key={image}
                   type="button"
                   onClick={() => setActiveImage(image)}
                   className={cn(
-                    "relative h-14 w-14 md:h-20 md:w-20 shrink-0 snap-center overflow-hidden rounded-lg md:rounded-2xl border-2 transition-all",
+                    "relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl border-2 transition-all",
                     activeImage === image
-                      ? "border-primary shadow-md scale-105"
+                      ? "border-primary shadow-md"
                       : "border-transparent hover:border-primary/60",
                   )}
                 >
@@ -207,7 +249,7 @@ export default function Product() {
                 </button>
               ))}
             </div>
-            <div className="order-1 flex-1 aspect-square md:aspect-[4/5] overflow-hidden rounded-xl md:rounded-[32px] bg-muted shadow-lg md:shadow-xl">
+            <div className="flex-1 aspect-[4/5] overflow-hidden rounded-[32px] bg-muted shadow-xl">
               <img
                 src={activeImage}
                 alt={product.name}
@@ -217,79 +259,78 @@ export default function Product() {
             </div>
           </div>
 
-          <div className="space-y-5 md:space-y-8">
-            <div className="space-y-2 md:space-y-4">
+          {/* Desktop product info */}
+          <div className="space-y-8">
+            <div className="space-y-4">
               {product.rating && (
-                <div className="flex items-center gap-1.5 text-xs md:text-sm text-muted-foreground">
-                  <Star className="size-3.5 md:size-4 fill-primary text-primary" />
+                <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                  <Star className="size-4 fill-primary text-primary" />
                   <span className="font-medium">{product.rating.average.toFixed(1)}</span>
                   <span className="text-muted-foreground/70">({product.rating.count})</span>
                 </div>
               )}
-              <h1 className="text-2xl font-semibold tracking-tight leading-tight sm:text-3xl lg:text-4xl">
+              <h1 className="text-3xl lg:text-4xl font-semibold tracking-tight leading-tight">
                 {product.name}
               </h1>
-              <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{product.description}</p>
+              <p className="text-base text-muted-foreground leading-relaxed">{product.description}</p>
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl md:text-3xl font-bold">{formatCurrency(parseFloat(variant?.price || product.price))}</span>
-                {variant?.label && <span className="text-xs md:text-sm text-muted-foreground">/ {variant.label}</span>}
+                <span className="text-3xl font-bold">{formatCurrency(parseFloat(variant?.price || product.price))}</span>
+                {variant?.label && <span className="text-sm text-muted-foreground">/ {variant.label}</span>}
               </div>
             </div>
 
-            <div className="space-y-3 md:space-y-4">
-              <div className="text-xs md:text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+            <div className="space-y-4">
+              <div className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
                 Select Size
               </div>
-              <div className="grid gap-2 md:gap-3 grid-cols-3">
+              <div className="grid gap-3 grid-cols-3">
                 {product.sizes?.map((size: any) => (
                   <button
                     key={size.volume}
                     type="button"
                     onClick={() => setSelectedSize(size.volume)}
                     className={cn(
-                      "rounded-lg md:rounded-xl border-2 px-2 py-2.5 md:px-4 md:py-3 text-left transition-all",
+                      "rounded-xl border-2 px-4 py-3 text-left transition-all",
                       selectedSize === size.volume
                         ? "border-primary bg-primary/5 shadow-sm"
                         : "border-border hover:border-primary/60 hover:bg-accent/50",
                     )}
                     aria-pressed={selectedSize === size.volume}
                   >
-                    <div className="text-xs md:text-sm font-semibold text-foreground truncate">{size.label}</div>
-                    <div className="text-[10px] md:text-xs text-muted-foreground mt-0.5">{formatCurrency(parseFloat(size.price))}</div>
+                    <div className="text-sm font-semibold text-foreground truncate">{size.label}</div>
+                    <div className="text-xs text-muted-foreground mt-0.5">{formatCurrency(parseFloat(size.price))}</div>
                   </button>
                 ))}
               </div>
             </div>
 
-            <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:gap-3">
-              <Button size="lg" className="flex-1 h-11 md:h-12 text-sm md:text-base font-semibold" onClick={handleAddToCart}>
+            <div className="flex items-center gap-3">
+              <Button size="lg" className="flex-1 h-12 text-base font-semibold" onClick={handleAddToCart}>
                 Add to Cart
               </Button>
-              <div className="flex gap-2 justify-center sm:justify-start">
-                <button
-                  type="button"
-                  className="inline-flex size-11 md:size-12 items-center justify-center rounded-full border-2 hover:border-primary/60 hover:bg-accent/50 transition-all" 
-                  aria-label="Add to wishlist"
-                >
-                  <Heart className="size-4 md:size-5" />
-                </button>
-                <button
-                  type="button"
-                  className="inline-flex size-11 md:size-12 items-center justify-center rounded-full border-2 hover:border-primary/60 hover:bg-accent/50 transition-all"
-                  aria-label="Share scent"
-                >
-                  <Share2 className="size-4 md:size-5" />
-                </button>
-              </div>
+              <button
+                type="button"
+                className="inline-flex size-12 items-center justify-center rounded-full border-2 hover:border-primary/60 hover:bg-accent/50 transition-all" 
+                aria-label="Add to wishlist"
+              >
+                <Heart className="size-5" />
+              </button>
+              <button
+                type="button"
+                className="inline-flex size-12 items-center justify-center rounded-full border-2 hover:border-primary/60 hover:bg-accent/50 transition-all"
+                aria-label="Share scent"
+              >
+                <Share2 className="size-5" />
+              </button>
             </div>
 
-            <div className="grid gap-2.5 md:gap-4 grid-cols-1 sm:grid-cols-3">
+            <div className="grid gap-4 grid-cols-3">
               {SERVICE_POINTS.map(({ icon: Icon, title, copy }) => (
                 <Card key={title} className="border-dashed hover:border-primary/30 transition-colors">
-                  <CardContent className="space-y-1.5 md:space-y-2 p-3 md:p-4">
-                    <Icon className="size-4 md:size-5 text-primary" />
-                    <div className="text-xs md:text-sm font-semibold text-foreground leading-tight">{title}</div>
-                    <p className="text-[10px] md:text-xs leading-relaxed text-muted-foreground">{copy}</p>
+                  <CardContent className="space-y-2 p-4">
+                    <Icon className="size-5 text-primary" />
+                    <div className="text-sm font-semibold text-foreground leading-tight">{title}</div>
+                    <p className="text-xs leading-relaxed text-muted-foreground">{copy}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -298,25 +339,120 @@ export default function Product() {
         </div>
       </section>
 
-      <section className="container space-y-8 md:space-y-12 animate-fade-up animate-delay-2">
-        <div className="grid gap-8 md:gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+      {/* Mobile: Product info */}
+      <section className="md:hidden px-4 py-6 space-y-6">
+        <div className="space-y-3">
+          {product.rating && (
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <Star className="size-3.5 fill-primary text-primary" />
+              <span className="font-semibold">{product.rating.average.toFixed(1)}</span>
+              <span>({product.rating.count} reviews)</span>
+            </div>
+          )}
+          <h1 className="text-2xl font-bold tracking-tight leading-tight">
+            {product.name}
+          </h1>
+          <p className="text-sm text-muted-foreground leading-relaxed">{product.description}</p>
+        </div>
+
+        {/* Price and size selector */}
+        <div className="space-y-4">
+          <div className="flex items-baseline justify-between">
+            <span className="text-3xl font-bold">{formatCurrency(parseFloat(variant?.price || product.price))}</span>
+            {variant?.label && <span className="text-sm text-muted-foreground">{variant.label}</span>}
+          </div>
+          
+          <div className="space-y-2.5">
+            <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Select Size
+            </div>
+            <div className="grid gap-2 grid-cols-3">
+              {product.sizes?.map((size: any) => (
+                <button
+                  key={size.volume}
+                  type="button"
+                  onClick={() => setSelectedSize(size.volume)}
+                  className={cn(
+                    "rounded-lg border-2 px-3 py-3 text-center transition-all active:scale-95",
+                    selectedSize === size.volume
+                      ? "border-primary bg-primary/10 shadow-sm"
+                      : "border-border active:border-primary/60",
+                  )}
+                  aria-pressed={selectedSize === size.volume}
+                >
+                  <div className="text-xs font-bold text-foreground">{size.label}</div>
+                  <div className="text-[10px] text-muted-foreground mt-0.5">{formatCurrency(parseFloat(size.price))}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Action buttons */}
+        <div className="space-y-3">
+          <Button size="lg" className="w-full h-12 text-base font-semibold" onClick={handleAddToCart}>
+            Add to Cart — {formatCurrency(parseFloat(variant?.price || product.price))}
+          </Button>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              className="flex-1 h-11 inline-flex items-center justify-center gap-2 rounded-lg border-2 font-medium text-sm active:scale-95 transition-all" 
+              aria-label="Add to wishlist"
+            >
+              <Heart className="size-4" />
+              <span>Save</span>
+            </button>
+            <button
+              type="button"
+              className="flex-1 h-11 inline-flex items-center justify-center gap-2 rounded-lg border-2 font-medium text-sm active:scale-95 transition-all"
+              aria-label="Share scent"
+            >
+              <Share2 className="size-4" />
+              <span>Share</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Service points - mobile compact */}
+        <div className="space-y-2 pt-4 border-t">
+          {SERVICE_POINTS.map(({ icon: Icon, title, copy }) => (
+            <div key={title} className="flex gap-3 items-start">
+              <div className="shrink-0 mt-0.5">
+                <Icon className="size-4 text-primary" />
+              </div>
+              <div className="space-y-0.5">
+                <div className="text-xs font-semibold text-foreground">{title}</div>
+                <p className="text-[11px] leading-relaxed text-muted-foreground">{copy}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Fragrance details section */}
+      <section className="px-4 md:container py-8 md:py-12 space-y-6 md:space-y-12 bg-secondary/20 md:bg-transparent">
+        <div className="grid gap-6 md:gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
           <div className="space-y-6 md:space-y-8">
+            {/* Fragrance structure */}
             <div>
-              <h2 className="text-lg md:text-xl font-semibold tracking-tight">Fragrance structure</h2>
-              <div className="mt-4 grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-3">
+              <h2 className="text-lg md:text-xl font-bold tracking-tight mb-4">Fragrance Notes</h2>
+              <div className="grid gap-3 grid-cols-1 sm:grid-cols-3">
                 {product.accords && ([
-                  { label: "Top", notes: product.accords.top, icon: Sparkles },
-                  { label: "Heart", notes: product.accords.heart, icon: Droplet },
-                  { label: "Base", notes: product.accords.base, icon: Leaf },
-                ] as const).map(({ label, notes, icon: Icon }) => (
-                  <Card key={label}>
-                    <CardContent className="space-y-2 md:space-y-3 p-4 md:p-5">
-                      <div className="flex items-center gap-2 text-xs md:text-sm font-semibold text-foreground">
-                        <Icon className="size-3 md:size-4 text-primary" /> {label} notes
+                  { label: "Top", notes: product.accords.top, icon: Sparkles, color: "text-amber-500" },
+                  { label: "Heart", notes: product.accords.heart, icon: Droplet, color: "text-rose-500" },
+                  { label: "Base", notes: product.accords.base, icon: Leaf, color: "text-emerald-500" },
+                ] as const).map(({ label, notes, icon: Icon, color }) => (
+                  <Card key={label} className="border-2">
+                    <CardContent className="space-y-2.5 p-4">
+                      <div className={cn("flex items-center gap-2 text-sm font-bold", color)}>
+                        <Icon className="size-4" /> {label}
                       </div>
-                      <ul className="space-y-1 md:space-y-2 text-xs md:text-sm text-muted-foreground">
+                      <ul className="space-y-1.5 text-xs text-muted-foreground">
                         {notes.map((note) => (
-                          <li key={note}>{note}</li>
+                          <li key={note} className="flex items-start gap-1.5">
+                            <span className="text-primary mt-0.5">•</span>
+                            <span>{note}</span>
+                          </li>
                         ))}
                       </ul>
                     </CardContent>
@@ -325,70 +461,77 @@ export default function Product() {
               </div>
             </div>
 
-            <div className="space-y-3 md:space-y-4">
-              <h2 className="text-lg md:text-xl font-semibold tracking-tight">About this extrait</h2>
-              {product.story && <p className="text-sm leading-relaxed text-muted-foreground">{product.story}</p>}
-              {product.highlights && product.highlights.length > 0 && (
-                <div className="grid gap-3 md:gap-4 grid-cols-1 md:grid-cols-3">
-                  {product.highlights.map((item: any) => (
-                    <Card key={item.title} className="h-full">
-                      <CardContent className="space-y-2 p-4 md:p-5">
-                        <div className="text-xs md:text-sm font-semibold text-foreground">{item.title}</div>
-                        <p className="text-xs leading-relaxed text-muted-foreground">{item.copy}</p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              )}
-            </div>
+            {/* Story and highlights */}
+            {(product.story || (product.highlights && product.highlights.length > 0)) && (
+              <div className="space-y-4">
+                <h2 className="text-lg md:text-xl font-bold tracking-tight">The Story</h2>
+                {product.story && <p className="text-sm leading-relaxed text-muted-foreground">{product.story}</p>}
+                {product.highlights && product.highlights.length > 0 && (
+                  <div className="grid gap-3 grid-cols-1 md:grid-cols-3">
+                    {product.highlights.map((item: any) => (
+                      <Card key={item.title} className="border-l-4 border-l-primary">
+                        <CardContent className="space-y-1.5 p-4">
+                          <div className="text-sm font-bold text-foreground">{item.title}</div>
+                          <p className="text-xs leading-relaxed text-muted-foreground">{item.copy}</p>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
-          <aside className="space-y-6 md:space-y-8">
+          {/* Sidebar info */}
+          <aside className="space-y-4 md:space-y-6">
             {product.ritual && product.ritual.length > 0 && (
-              <div className="rounded-2xl md:rounded-3xl border bg-secondary/40 p-4 md:p-6">
-                <h3 className="text-xs md:text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                  Ritual notes
+              <div className="rounded-xl md:rounded-2xl border-2 bg-gradient-to-br from-primary/5 to-primary/10 p-4 md:p-5">
+                <h3 className="text-sm font-bold uppercase tracking-wide text-foreground mb-3">
+                  How to Apply
                 </h3>
-                <ul className="mt-3 md:mt-4 space-y-2 md:space-y-3 text-xs md:text-sm text-muted-foreground">
-                  {product.ritual.map((tip: string) => (
-                  <li key={tip} className="flex gap-2">
-                    <span className="text-primary">•</span>
-                    <span>{tip}</span>
+                <ul className="space-y-2.5 text-xs text-muted-foreground">
+                  {product.ritual.map((tip: string, index: number) => (
+                  <li key={tip} className="flex gap-2.5">
+                    <span className="shrink-0 flex items-center justify-center size-5 rounded-full bg-primary/20 text-primary text-[10px] font-bold">
+                      {index + 1}
+                    </span>
+                    <span className="pt-0.5">{tip}</span>
                   </li>
                   ))}
                 </ul>
               </div>
             )}
             {product.ingredients && product.ingredients.length > 0 && (
-              <div className="rounded-2xl md:rounded-3xl border bg-secondary/20 p-4 md:p-6">
-                <h3 className="text-xs md:text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                  Ingredients
+              <div className="rounded-xl md:rounded-2xl border-2 bg-background p-4 md:p-5">
+                <h3 className="text-sm font-bold uppercase tracking-wide text-foreground mb-3">
+                  Key Ingredients
                 </h3>
-                <ul className="mt-3 md:mt-4 flex flex-wrap gap-1.5 md:gap-2 text-xs uppercase tracking-wide text-muted-foreground">
+                <div className="flex flex-wrap gap-1.5 text-[10px] uppercase tracking-wider text-muted-foreground">
                   {product.ingredients.map((ingredient: string) => (
-                  <li key={ingredient} className="rounded-full border px-2 py-0.5 md:px-3 md:py-1">
+                  <span key={ingredient} className="rounded-full border-2 px-2.5 py-1 font-medium">
                     {ingredient}
-                  </li>
+                  </span>
                   ))}
-                </ul>
+                </div>
               </div>
             )}
           </aside>
         </div>
       </section>
 
-      <section className="container pb-12 md:pb-16 animate-fade-up animate-delay-3">
-        <div className="mb-6 md:mb-8 flex items-center justify-between">
-          <h2 className="text-xl font-semibold tracking-tight sm:text-2xl lg:text-3xl">
-            Pairs well with
+      {/* Related products */}
+      <section className="px-4 md:container py-8 md:py-12">
+        <div className="mb-5 md:mb-8 flex items-center justify-between">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-tight">
+            You May Also Like
           </h2>
-          <Button asChild variant="ghost" className="gap-1 text-xs md:text-sm font-medium text-primary">
+          <Button asChild variant="ghost" size="sm" className="gap-1 text-xs md:text-sm font-semibold text-primary -mr-2">
             <Link to="/shop">
-              Browse all <ArrowUpRight className="size-3 md:size-4" />
+              View All <ArrowUpRight className="size-3.5 md:size-4" />
             </Link>
           </Button>
         </div>
-        <div className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 md:gap-6 grid-cols-2 lg:grid-cols-3">
           {relatedProducts.length > 0 ? (
             relatedProducts.map((related, index) => (
               <div key={related.id} style={{ animation: `fadeSlideUp 0.7s ease forwards`, animationDelay: `${index * 0.08}s` }}>
@@ -396,7 +539,7 @@ export default function Product() {
               </div>
             ))
           ) : (
-            <div className="col-span-full text-center py-8 text-muted-foreground">
+            <div className="col-span-full text-center py-12 text-sm text-muted-foreground">
               No related products available
             </div>
           )}
