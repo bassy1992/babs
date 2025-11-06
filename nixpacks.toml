@@ -1,2 +1,5 @@
+[phases.setup]
+aptPkgs = ["libjpeg-dev", "zlib1g-dev"]
+
 [phases.build]
 cmds = ["cd back && python manage.py collectstatic --noinput"]
