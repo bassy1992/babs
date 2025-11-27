@@ -131,6 +131,12 @@ CSRF_TRUSTED_ORIGINS = config(
     default='http://localhost:8080,http://127.0.0.1:8080,https://babs-production.up.railway.app,https://*.railway.app,https://babs-roan.vercel.app,https://babs-8uafwsn03-bassys-projects-fca17413.vercel.app,https://*.vercel.app',
     cast=Csv()
 )
+CSRF_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_HTTPONLY = False
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_USE_SESSIONS = False
+SESSION_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_SAMESITE = 'Lax'
 
 # REST Framework
 REST_FRAMEWORK = {
