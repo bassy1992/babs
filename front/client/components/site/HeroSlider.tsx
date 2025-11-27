@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 
 interface HeroSlide {
@@ -181,22 +181,6 @@ export function HeroSlider() {
             </CarouselItem>
           ))}
         </CarouselContent>
-
-        {/* Navigation Arrows */}
-        <button
-          onClick={() => api?.scrollPrev()}
-          className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center size-12 lg:size-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all hover:scale-110"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="size-6 lg:size-7" />
-        </button>
-        <button
-          onClick={() => api?.scrollNext()}
-          className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center size-12 lg:size-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all hover:scale-110"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="size-6 lg:size-7" />
-        </button>
       </Carousel>
     </section>
   );

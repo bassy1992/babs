@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-dev-key-change-in-production')
 DEBUG = config('DEBUG', default=True, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,babs-production.up.railway.app', cast=Csv())
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,babs-production.up.railway.app,*.railway.app', cast=Csv())
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -112,7 +112,7 @@ CORS_ALLOW_CREDENTIALS = True
 # CSRF Settings
 CSRF_TRUSTED_ORIGINS = config(
     'CSRF_TRUSTED_ORIGINS',
-    default='http://localhost:8080,http://127.0.0.1:8080',
+    default='http://localhost:8080,http://127.0.0.1:8080,https://babs-production.up.railway.app,https://*.railway.app',
     cast=Csv()
 )
 

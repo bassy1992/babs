@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Search } from "lucide-react";
 
 const logoUrl =
   "https://cdn.builder.io/api/v1/image/assets%2F261a98e6df434ad1ad15c1896e5c6aa3%2F221f1b7f10774a3d9288702a5384a36e?format=webp&width=800";
@@ -11,8 +12,10 @@ const logoUrl =
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const { totalItems } = useCart();
   const isMobile = useIsMobile();
+  const navigate = Router.useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +31,16 @@ export function Header() {
       setOpen(false);
     }
   }, [isMobile, open]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery("");
+      setOpen(false);
+    }
+  };
+
   return (
     <header className={`sticky top-0 z-40 w-full border-b transition-all duration-300 ${
       scrolled 
@@ -75,8 +88,22 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* Desktop Search */}
+          <form onSubmit={handleSearch} className="hidden md:flex items-center animate-fade-up animate-delay-2">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <input
+                type="search"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-48 lg:w-64 rounded-full border border-input bg-background pl-9 pr-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+              />
+            </div>
+          </form>
+
           <Router.Link to="/cart" className="hidden sm:inline-flex">
-            <button aria-label="Cart" className="relative inline-flex items-center gap-2 rounded-md px-2 sm:px-3 py-2 hover:bg-secondary/50 transition-colors animate-fade-up animate-delay-2">
+            <button aria-label="Cart" className="relative inline-flex items-center gap-2 rounded-md px-2 sm:px-3 py-2 hover:bg-secondary/50 transition-colors animate-fade-up animate-delay-3">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className="h-5 w-5 text-foreground/90">
                 <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -89,7 +116,7 @@ export function Header() {
             </button>
           </Router.Link>
 
-          <Button className="hidden lg:inline-flex animate-fade-up animate-delay-3" size="sm">
+          <Button className="hidden lg:inline-flex animate-fade-up animate-delay-4" size="sm">
             Shop now
           </Button>
 
@@ -97,7 +124,7 @@ export function Header() {
           <button
             aria-label="Toggle menu"
             onClick={() => setOpen((s) => !s)}
-            className="inline-flex items-center justify-center rounded-md p-2 md:hidden animate-fade-up animate-delay-4"
+            className="inline-flex items-center justify-center rounded-md p-2 md:hidden animate-fade-up animate-delay-5"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -121,10 +148,24 @@ export function Header() {
       {/* Mobile nav panel */}
       <div
         className={`md:hidden transition-all duration-300 ease-in-out ${
-          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+          open ? "max-h-[32rem] opacity-100" : "max-h-0 opacity-0 overflow-hidden"
         } border-t bg-white/95 backdrop-blur-sm`}
       >
         <div className={`space-y-1 px-4 py-4 ${open ? "animate-fade-up" : ""}`}>
+          {/* Mobile Search */}
+          <form onSubmit={handleSearch} className={`mb-3 ${open ? "animate-fade-up" : ""}`}>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <input
+                type="search"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full rounded-lg border border-input bg-background pl-9 pr-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+              />
+            </div>
+          </form>
+
           {[
             { to: "/", label: "Home" },
             { to: "/shop", label: "Shop" },
@@ -140,14 +181,14 @@ export function Header() {
                   isActive 
                     ? "bg-primary/10 text-primary" 
                     : "text-foreground/90 hover:bg-secondary/80"
-                } ${open ? `animate-fade-up ${index > 3 ? "animate-delay-4" : `animate-delay-${index + 1}`}` : ""}`
+                } ${open ? `animate-fade-up ${index > 3 ? "animate-delay-5" : `animate-delay-${index + 2}`}` : ""}`
               }
             >
               {item.label}
             </Router.NavLink>
           ))}
 
-          <div className={`flex gap-2 pt-2 ${open ? "animate-fade-up animate-delay-3" : ""}`}>
+          <div className={`flex gap-2 pt-2 ${open ? "animate-fade-up animate-delay-4" : ""}`}>
             <Router.Link to="/cart" onClick={() => setOpen(false)} className="flex-1">
               <button className="w-full rounded-lg border border-primary/20 px-3 py-3 text-sm font-medium hover:bg-secondary/50 transition-colors relative">
                 Cart

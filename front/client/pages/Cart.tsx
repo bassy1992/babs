@@ -36,6 +36,7 @@ export default function Cart() {
     "WELCOME10": 0.10,  // 10% off
     "SAVE20": 0.20,     // 20% off
     "FIRST15": 0.15,    // 15% off
+    "THANX10": 0.10,    // 10% off
   };
 
   const handleApplyPromo = () => {
@@ -50,7 +51,7 @@ export default function Cart() {
       setPromoError("");
       setPromoCode("");
     } else {
-      setPromoError("Invalid promo code");
+      setPromoError("Invalid promo code. Try: WELCOME10, SAVE20, or FIRST15");
       setAppliedPromo(null);
     }
   };
@@ -301,10 +302,6 @@ export default function Cart() {
                     )}
                   </div>
                 )}
-                
-                <p className="text-xs leading-relaxed text-muted-foreground">
-                  Try: WELCOME10, SAVE20, or FIRST15
-                </p>
               </CardContent>
             </Card>
 
