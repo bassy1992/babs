@@ -47,13 +47,6 @@ export function Header() {
         ? "bg-white/95 backdrop-blur-md shadow-sm supports-[backdrop-filter]:bg-white/80" 
         : "bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/60"
     }`}>
-      <div className="bg-primary text-primary-foreground text-xs sm:text-sm">
-        <div className="container flex items-center justify-center gap-1 sm:gap-2 py-1 px-4 animate-fade-up">
-          <span className="font-semibold">Free shipping</span>
-          <span className="hidden xs:inline">on orders over {formatCurrency(50)}</span>
-          <span className="xs:hidden">over {formatCurrency(50)}</span>
-        </div>
-      </div>
       <div className="container flex h-14 sm:h-16 items-center justify-between animate-fade-up animate-delay-1">
         <Router.Link to="/" className="flex items-center gap-2 sm:gap-3">
           <img

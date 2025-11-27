@@ -335,11 +335,6 @@ export default function Cart() {
                 Checkout
               </Button>
             </div>
-            {shipping > 0 && (
-              <div className="text-[10px] text-center text-muted-foreground">
-                Add {formatCurrency(150 - subtotal)} more for free shipping
-              </div>
-            )}
           </div>
         </div>
       )}
