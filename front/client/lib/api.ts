@@ -61,6 +61,28 @@ export interface ApiCollectionDetail extends ApiCollection {
   products: ApiProduct[];
 }
 
+// Fetch with timeout and caching
+const fetchWithTimeout = async (url: string, options: RequestInit = {}, timeout = 10000) => {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+    });
+    clearTimeout(id);
+    return response;
+  } catch (error) {
+    clearTimeout(id);
+    throw error;
+  }
+};
+
 export const api = {
   // Products
   products: {
@@ -71,33 +93,33 @@ export const api = {
           url.searchParams.append(key, value);
         });
       }
-      const response = await fetch(url.toString());
+      const response = await fetchWithTimeout(url.toString());
       return response.json();
     },
 
     get: async (slug: string): Promise<ApiProductDetail> => {
-      const response = await fetch(`${API_BASE_URL}/products/${slug}/`);
+      const response = await fetchWithTimeout(`${API_BASE_URL}/products/${slug}/`);
       if (!response.ok) throw new Error('Product not found');
       return response.json();
     },
 
     featured: async (): Promise<ApiProduct[]> => {
-      const response = await fetch(`${API_BASE_URL}/products/featured/`);
+      const response = await fetchWithTimeout(`${API_BASE_URL}/products/featured/`);
       return response.json();
     },
 
     bestsellers: async (): Promise<ApiProduct[]> => {
-      const response = await fetch(`${API_BASE_URL}/products/bestsellers/`);
+      const response = await fetchWithTimeout(`${API_BASE_URL}/products/bestsellers/`);
       return response.json();
     },
 
     search: async (query: string): Promise<ApiProduct[]> => {
-      const response = await fetch(`${API_BASE_URL}/products/search/?q=${encodeURIComponent(query)}`);
+      const response = await fetchWithTimeout(`${API_BASE_URL}/products/search/?q=${encodeURIComponent(query)}`);
       return response.json();
     },
 
     related: async (slug: string): Promise<ApiProduct[]> => {
-      const response = await fetch(`${API_BASE_URL}/products/${slug}/related/`);
+      const response = await fetchWithTimeout(`${API_BASE_URL}/products/${slug}/related/`);
       return response.json();
     },
   },
@@ -105,19 +127,19 @@ export const api = {
   // Collections
   collections: {
     list: async () => {
-      const response = await fetch(`${API_BASE_URL}/collections/`);
+      const response = await fetchWithTimeout(`${API_BASE_URL}/collections/`);
       const data = await response.json();
       return data.results || data;
     },
 
     get: async (slug: string): Promise<ApiCollectionDetail> => {
-      const response = await fetch(`${API_BASE_URL}/collections/${slug}/`);
+      const response = await fetchWithTimeout(`${API_BASE_URL}/collections/${slug}/`);
       if (!response.ok) throw new Error('Collection not found');
       return response.json();
     },
 
     featured: async (): Promise<ApiCollection[]> => {
-      const response = await fetch(`${API_BASE_URL}/collections/featured/`);
+      const response = await fetchWithTimeout(`${API_BASE_URL}/collections/featured/`);
       const data = await response.json();
       return data.results || data;
     },
