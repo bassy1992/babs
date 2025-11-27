@@ -259,9 +259,9 @@ export default function Cart() {
               </CardContent>
             </Card>
 
-            {/* Promo code - Desktop only */}
-            <Card className="hidden md:block rounded-3xl border bg-white/80 backdrop-blur-sm animate-fade-up animate-delay-3">
-              <CardContent className="space-y-4 p-6">
+            {/* Promo code */}
+            <Card className="rounded-xl md:rounded-3xl border bg-white/80 backdrop-blur-sm animate-fade-up animate-delay-3">
+              <CardContent className="space-y-4 p-5 md:p-6">
                 <div className="text-sm font-semibold text-foreground">Promo Code</div>
                 
                 {appliedPromo ? (
