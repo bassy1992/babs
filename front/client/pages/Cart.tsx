@@ -63,8 +63,7 @@ export default function Cart() {
 
   const shipping = subtotal > 150 ? 0 : 12;
   const discount = appliedPromo ? subtotal * appliedPromo.discount : 0;
-  const tax = (subtotal - discount) * 0.08;
-  const total = subtotal - discount + shipping + tax;
+  const total = subtotal - discount + shipping;
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-white via-white to-secondary/20">
@@ -237,10 +236,6 @@ export default function Cart() {
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground">Shipping</span>
                   <span className="text-xs md:text-sm font-medium">{shipping === 0 ? "Free" : formatCurrency(shipping)}</span>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">Tax</span>
-                  <span className="text-xs md:text-sm">{formatCurrency(tax)}</span>
                 </div>
                 <div className="border-t border-dashed pt-4 md:pt-5">
                   <div className="flex items-center justify-between mb-4 md:mb-6">
