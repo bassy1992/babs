@@ -45,10 +45,10 @@ const HERO_SLIDES: HeroSlide[] = [
     title: "Botanical Library",
     subtitle: "Spring Arrivals",
     description: "Crisp florals layered with rare citrus absolutes. Fresh, vibrant, and endlessly wearable.",
-    image: "https://images.unsplash.com/photo-1528150177500-4c6bb07b44f2?q=80&w=2000&auto=format&fit=crop",
+    image: "https://i.ibb.co/Qb0Lqjy/Whats-App-Image-2024-11-27-at-19-38-43-7c4e8e0e.jpg",
     cta: {
-      primary: { text: "Shop Botanicals", link: "https://essentialsbybaabie.com/collection/botanical" },
-      secondary: { text: "Learn More", link: "https://essentialsbybaabie.com/about" },
+      primary: { text: "Shop Botanicals", link: "/collection/botanical" },
+      secondary: { text: "Learn More", link: "/shop" },
     },
   },
 ];
