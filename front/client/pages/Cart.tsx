@@ -1,8 +1,9 @@
+import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useCart } from "@/context/CartContext";
-import { Trash, CreditCard, ArrowLeft, Gift, Sparkles, ShieldCheck } from "lucide-react";
+import { Trash, CreditCard, ArrowLeft, Gift, Sparkles, ShieldCheck, X } from "lucide-react";
 import { cn, formatCurrency } from "@/lib/utils";
 
 const PERKS = [
@@ -26,10 +27,43 @@ const PERKS = [
 export default function Cart() {
   const { items, updateQty, removeItem, subtotal, totalItems } = useCart();
   const navigate = useNavigate();
+  const [promoCode, setPromoCode] = React.useState("");
+  const [appliedPromo, setAppliedPromo] = React.useState<{ code: string; discount: number } | null>(null);
+  const [promoError, setPromoError] = React.useState("");
+
+  // Sample promo codes
+  const promoCodes: Record<string, number> = {
+    "WELCOME10": 0.10,  // 10% off
+    "SAVE20": 0.20,     // 20% off
+    "FIRST15": 0.15,    // 15% off
+  };
+
+  const handleApplyPromo = () => {
+    const code = promoCode.toUpperCase().trim();
+    if (!code) {
+      setPromoError("Please enter a promo code");
+      return;
+    }
+    
+    if (promoCodes[code]) {
+      setAppliedPromo({ code, discount: promoCodes[code] });
+      setPromoError("");
+      setPromoCode("");
+    } else {
+      setPromoError("Invalid promo code");
+      setAppliedPromo(null);
+    }
+  };
+
+  const handleRemovePromo = () => {
+    setAppliedPromo(null);
+    setPromoError("");
+  };
 
   const shipping = subtotal > 150 ? 0 : 12;
-  const tax = subtotal * 0.08;
-  const total = subtotal + shipping + tax;
+  const discount = appliedPromo ? subtotal * appliedPromo.discount : 0;
+  const tax = (subtotal - discount) * 0.08;
+  const total = subtotal - discount + shipping + tax;
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-white via-white to-secondary/20">
@@ -193,6 +227,12 @@ export default function Cart() {
                   <span className="text-muted-foreground">Subtotal</span>
                   <span className="font-semibold">{formatCurrency(subtotal)}</span>
                 </div>
+                {appliedPromo && (
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-green-600 font-medium">Discount ({appliedPromo.code})</span>
+                    <span className="text-green-600 font-semibold">-{formatCurrency(discount)}</span>
+                  </div>
+                )}
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground">Shipping</span>
                   <span className="text-xs md:text-sm font-medium">{shipping === 0 ? "Free" : formatCurrency(shipping)}</span>
@@ -222,17 +262,48 @@ export default function Cart() {
             <Card className="hidden md:block rounded-3xl border bg-white/80 backdrop-blur-sm animate-fade-up animate-delay-3">
               <CardContent className="space-y-4 p-6">
                 <div className="text-sm font-semibold text-foreground">Promo Code</div>
-                <div className="flex gap-2">
-                  <input
-                    placeholder="Enter code"
-                    className="flex-1 rounded-full border border-primary/20 bg-background px-4 py-2 text-sm"
-                  />
-                  <Button variant="outline" className="rounded-full" type="button">
-                    Apply
-                  </Button>
-                </div>
+                
+                {appliedPromo ? (
+                  <div className="flex items-center justify-between rounded-full border-2 border-green-200 bg-green-50 px-4 py-2.5">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-bold text-green-700">{appliedPromo.code}</span>
+                      <span className="text-xs text-green-600">-{(appliedPromo.discount * 100).toFixed(0)}% off</span>
+                    </div>
+                    <button
+                      onClick={handleRemovePromo}
+                      className="text-green-600 hover:text-green-700"
+                      aria-label="Remove promo code"
+                    >
+                      <X className="size-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    <div className="flex gap-2">
+                      <input
+                        placeholder="Enter code"
+                        value={promoCode}
+                        onChange={(e) => setPromoCode(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleApplyPromo()}
+                        className="flex-1 rounded-full border border-primary/20 bg-background px-4 py-2 text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                      />
+                      <Button 
+                        variant="outline" 
+                        className="rounded-full" 
+                        type="button"
+                        onClick={handleApplyPromo}
+                      >
+                        Apply
+                      </Button>
+                    </div>
+                    {promoError && (
+                      <p className="text-xs text-destructive">{promoError}</p>
+                    )}
+                  </div>
+                )}
+                
                 <p className="text-xs leading-relaxed text-muted-foreground">
-                  Single-use codes only. Discounts shown at checkout.
+                  Try: WELCOME10, SAVE20, or FIRST15
                 </p>
               </CardContent>
             </Card>
