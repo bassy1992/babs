@@ -2,7 +2,7 @@
  * API client for Django backend
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://babs-production.up.railway.app/api';
 
 export interface ApiProduct {
   id: string;
