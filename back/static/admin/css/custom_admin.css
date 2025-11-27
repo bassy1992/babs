@@ -1,0 +1,195 @@
+:root {
+    --primary-color: #1e3a8a;
+    --primary-light: #2563eb;
+    --primary-dark: #1e40af;
+    --bg-light: #f8fafc;
+    --text-dark: #1e293b;
+}
+
+/* Login Page Logo */
+.login-logo img {
+    max-width: 200px !important;
+    max-height: 100px !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* Sidebar Brand Logo */
+.brand-link .brand-image {
+    max-width: 40px !important;
+    max-height: 40px !important;
+}
+
+/* Navbar Brand Logo */
+.navbar-brand img {
+    max-width: 150px !important;
+    max-height: 40px !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* Dashboard Cards */
+.small-box {
+    border-radius: 12px !important;
+    box-shadow: 0 1px 3px rgba(30, 58, 138, 0.1) !important;
+    transition: all 0.3s ease !important;
+    border-left: 4px solid var(--primary-color) !important;
+}
+
+.small-box:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 16px rgba(30, 58, 138, 0.15) !important;
+}
+
+/* Content Header */
+.content-header {
+    padding: 24px 1rem !important;
+    background: var(--primary-color) !important;
+    color: white !important;
+    margin-bottom: 24px !important;
+    border-radius: 0 !important;
+    box-shadow: 0 2px 4px rgba(30, 58, 138, 0.1) !important;
+}
+
+.content-header h1 {
+    color: white !important;
+    font-weight: 600 !important;
+    font-size: 1.75rem !important;
+}
+
+/* Card Styling */
+.card {
+    border-radius: 12px !important;
+    box-shadow: 0 1px 3px rgba(30, 58, 138, 0.08) !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.card-header {
+    background: var(--primary-color) !important;
+    color: white !important;
+    border-radius: 12px 12px 0 0 !important;
+    font-weight: 600 !important;
+    padding: 1rem 1.25rem !important;
+}
+
+/* Table Styling */
+.table thead th {
+    background-color: var(--primary-color) !important;
+    color: white !important;
+    border: none !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.5px !important;
+    padding: 1rem !important;
+}
+
+.table tbody tr {
+    transition: background-color 0.2s !important;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f5f9 !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    transition: all 0.2s !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark) !important;
+    border-color: var(--primary-dark) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(30, 58, 138, 0.2) !important;
+}
+
+/* Sidebar */
+.sidebar {
+    background: var(--primary-color) !important;
+}
+
+.nav-sidebar .nav-link {
+    border-radius: 8px !important;
+    margin: 4px 12px !important;
+    transition: all 0.2s !important;
+    color: rgba(255,255,255,0.8) !important;
+}
+
+.nav-sidebar .nav-link:hover {
+    background-color: rgba(255,255,255,0.1) !important;
+    color: white !important;
+}
+
+.nav-sidebar .nav-link.active {
+    background-color: var(--primary-light) !important;
+    color: white !important;
+    font-weight: 500 !important;
+}
+
+.nav-sidebar .nav-icon {
+    color: rgba(255,255,255,0.8) !important;
+}
+
+.nav-sidebar .nav-link.active .nav-icon {
+    color: white !important;
+}
+
+/* Content Wrapper */
+.content-wrapper {
+    background-color: var(--bg-light) !important;
+}
+
+/* Info Box */
+.info-box {
+    border-radius: 12px !important;
+    box-shadow: 0 1px 3px rgba(30, 58, 138, 0.08) !important;
+    transition: all 0.2s !important;
+    border-left: 4px solid var(--primary-color) !important;
+}
+
+.info-box:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.12) !important;
+}
+
+/* Brand Link */
+.brand-link {
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    background: rgba(0,0,0,0.2) !important;
+}
+
+.brand-link .brand-text {
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+/* Navbar */
+.main-header {
+    background: var(--primary-color) !important;
+    border-bottom: none !important;
+}
+
+.navbar-nav .nav-link {
+    color: rgba(255,255,255,0.9) !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: white !important;
+}
+
+/* Footer */
+.main-footer {
+    background-color: white !important;
+    border-top: 1px solid #e2e8f0 !important;
+    padding: 1rem !important;
+    color: var(--text-dark) !important;
+}
+
+/* Form Controls */
+.form-control:focus {
+    border-color: var(--primary-light) !important;
+    box-shadow: 0 0 0 0.2rem rgba(30, 58, 138, 0.15) !important;
+}

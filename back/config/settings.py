@@ -12,6 +12,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,babs-production.up.railway.app', cast=Csv())
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -92,6 +93,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 MEDIA_URL = 'media/'
@@ -130,4 +132,98 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'API for luxury fragrance e-commerce platform',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+}
+
+# Jazzmin Settings
+JAZZMIN_SETTINGS = {
+    "site_title": "Babs Fragrance Admin",
+    "site_header": "Babs Fragrance",
+    "site_brand": "Babs Fragrance",
+    "site_logo": "admin/img/logo.webp",
+    "login_logo": "admin/img/logo.webp",
+    "site_logo_classes": "img-circle",
+    "site_icon": None,
+    "welcome_sign": "Welcome to Babs Fragrance Administration",
+    "copyright": "Babs Fragrance © 2025",
+    "search_model": ["products.Product", "orders.Order", "products.Category"],
+    "user_avatar": None,
+    
+    # Top Menu
+    "topmenu_links": [
+        {"name": "Dashboard", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "View Store", "url": "/", "new_window": True},
+        {"name": "API Docs", "url": "/api/schema/swagger-ui/", "new_window": True},
+        {"app": "products"},
+        {"app": "orders"},
+    ],
+    
+    # Side Menu
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "hide_apps": [],
+    "hide_models": [],
+    "order_with_respect_to": ["products", "product_collections", "orders", "auth"],
+    
+    # Icons
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "products.Product": "fas fa-spray-can",
+        "products.Category": "fas fa-tags",
+        "products.Brand": "fas fa-certificate",
+        "orders.Order": "fas fa-shopping-cart",
+        "orders.OrderItem": "fas fa-list",
+        "product_collections.Collection": "fas fa-layer-group",
+    },
+    
+    # Related Modal
+    "related_modal_active": True,
+    
+    # UI Tweaks
+    "custom_css": "admin/css/custom_admin.css",
+    "custom_js": None,
+    "use_google_fonts_cdn": True,
+    "show_ui_builder": False,
+    
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {
+        "auth.user": "collapsible",
+        "auth.group": "vertical_tabs"
+    },
+    
+    # Language Chooser
+    "language_chooser": False,
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-primary",
+    "accent": "accent-primary",
+    "navbar": "navbar-primary navbar-dark",
+    "no_navbar_border": True,
+    "navbar_fixed": True,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-dark-primary",
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": True,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": True,
+    "theme": "cosmo",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
 }
