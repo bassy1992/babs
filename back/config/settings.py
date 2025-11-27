@@ -104,7 +104,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS Settings
 CORS_ALLOWED_ORIGINS = config(
     'CORS_ALLOWED_ORIGINS',
-    default='http://localhost:8080,http://127.0.0.1:8080,https://babs-8uafwsn03-bassys-projects-fca17413.vercel.app,https://*.vercel.app',
+    default='http://localhost:8080,http://127.0.0.1:8080,https://babs-roan.vercel.app,https://babs-8uafwsn03-bassys-projects-fca17413.vercel.app,https://*.vercel.app',
     cast=Csv()
 )
 CORS_ALLOW_CREDENTIALS = True
@@ -112,7 +112,7 @@ CORS_ALLOW_CREDENTIALS = True
 # CSRF Settings
 CSRF_TRUSTED_ORIGINS = config(
     'CSRF_TRUSTED_ORIGINS',
-    default='http://localhost:8080,http://127.0.0.1:8080,https://babs-production.up.railway.app,https://*.railway.app,https://babs-8uafwsn03-bassys-projects-fca17413.vercel.app,https://*.vercel.app',
+    default='http://localhost:8080,http://127.0.0.1:8080,https://babs-production.up.railway.app,https://*.railway.app,https://babs-roan.vercel.app,https://babs-8uafwsn03-bassys-projects-fca17413.vercel.app,https://*.vercel.app',
     cast=Csv()
 )
 
