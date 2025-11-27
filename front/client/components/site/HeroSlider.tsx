@@ -45,7 +45,7 @@ const HERO_SLIDES: HeroSlide[] = [
     title: "Botanical Library",
     subtitle: "Spring Arrivals",
     description: "Crisp florals layered with rare citrus absolutes. Fresh, vibrant, and endlessly wearable.",
-    image: "https://i.ibb.co/Qb0Lqjy/Whats-App-Image-2024-11-27-at-19-38-43-7c4e8e0e.jpg",
+    image: "https://images.unsplash.com/photo-1615634260167-c8cdede054de?q=80&w=2000&auto=format&fit=crop",
     cta: {
       primary: { text: "Shop Botanicals", link: "/collection/botanical" },
       secondary: { text: "Learn More", link: "/shop" },
