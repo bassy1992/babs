@@ -202,6 +202,10 @@ JAZZMIN_SETTINGS = {
     "use_google_fonts_cdn": True,
     "show_ui_builder": False,
     
+    # Mobile optimization
+    "show_sidebar": True,
+    "navigation_expanded": False,
+    
     "changeform_format": "horizontal_tabs",
     "changeform_format_overrides": {
         "auth.user": "collapsible",
