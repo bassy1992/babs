@@ -71,14 +71,19 @@ export default function AnnouncementContainer({
   }
 
   return (
-    <div className={cn("space-y-0", className)}>
-      {visibleAnnouncements.map((announcement) => (
-        <AnnouncementBanner
+    <div className={cn("relative", className)}>
+      {visibleAnnouncements.map((announcement, index) => (
+        <div
           key={announcement.id}
-          announcement={announcement}
-          onDismiss={dismissible ? handleDismiss : undefined}
-          dismissible={dismissible}
-        />
+          className="animate-slide-down"
+          style={{ animationDelay: `${index * 100}ms` }}
+        >
+          <AnnouncementBanner
+            announcement={announcement}
+            onDismiss={dismissible ? handleDismiss : undefined}
+            dismissible={dismissible}
+          />
+        </div>
       ))}
     </div>
   );
