@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'products',
     'orders',
     'product_collections',
+    'announcements',
 ]
 
 MIDDLEWARE = [
@@ -116,7 +117,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS Settings
 CORS_ALLOWED_ORIGINS = config(
     'CORS_ALLOWED_ORIGINS',
-    default='http://localhost:8080,http://127.0.0.1:8080,https://babs-roan.vercel.app,https://babs-8uafwsn03-bassys-projects-fca17413.vercel.app',
+    default='http://localhost:3000,http://127.0.0.1:3000,http://localhost:8080,http://127.0.0.1:8080,https://babs-roan.vercel.app,https://babs-8uafwsn03-bassys-projects-fca17413.vercel.app',
     cast=Csv()
 )
 CORS_ALLOWED_ORIGIN_REGEXES = [
@@ -128,7 +129,7 @@ CORS_ALLOW_CREDENTIALS = True
 # CSRF Settings
 CSRF_TRUSTED_ORIGINS = config(
     'CSRF_TRUSTED_ORIGINS',
-    default='http://localhost:8080,http://127.0.0.1:8080,https://babs-production.up.railway.app,https://*.railway.app,https://babs-roan.vercel.app,https://babs-8uafwsn03-bassys-projects-fca17413.vercel.app,https://*.vercel.app',
+    default='http://localhost:3000,http://127.0.0.1:3000,http://localhost:8080,http://127.0.0.1:8080,https://babs-production.up.railway.app,https://*.railway.app,https://babs-roan.vercel.app,https://babs-8uafwsn03-bassys-projects-fca17413.vercel.app,https://*.vercel.app',
     cast=Csv()
 )
 CSRF_COOKIE_SECURE = not DEBUG
@@ -184,13 +185,14 @@ JAZZMIN_SETTINGS = {
     "navigation_expanded": True,
     "hide_apps": [],
     "hide_models": [],
-    "order_with_respect_to": ["products", "product_collections", "orders", "auth"],
+    "order_with_respect_to": ["announcements", "products", "product_collections", "orders", "auth"],
     
     # Icons
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",
         "auth.Group": "fas fa-users",
+        "announcements.Announcement": "fas fa-bullhorn",
         "products.Product": "fas fa-spray-can",
         "products.Category": "fas fa-tags",
         "products.Brand": "fas fa-certificate",

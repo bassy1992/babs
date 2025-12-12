@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { ProductCard, type Product } from "@/components/product/ProductCard";
 import { useProducts } from "@/hooks/useProducts";
+import { AnnouncementContainer } from "@/components/announcements";
 
 export default function Shop() {
   const [query, setQuery] = useState("");
@@ -42,6 +43,9 @@ export default function Shop() {
 
   return (
     <main>
+      {/* Shop Announcements */}
+      <AnnouncementContainer pageType="shop" />
+      
       <section className="container py-8 sm:py-12 animate-fade-up">
         <div className="mb-6 flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between animate-fade-up animate-delay-1">
           <div>

@@ -5,6 +5,7 @@ import { HeroSlider } from "@/components/site/HeroSlider";
 import { ArrowUpRight, Droplet, Leaf, Palette, Sparkles } from "lucide-react";
 import { useFeaturedProducts } from "@/hooks/useProducts";
 import { useFeaturedCollections } from "@/hooks/useCollections";
+import { AnnouncementContainer } from "@/components/announcements";
 import { useMemo } from "react";
 
 const COLLECTION_CARDS_FALLBACK = [
@@ -78,6 +79,9 @@ export default function Index() {
     <main className="overflow-hidden">
       {/* Hero Slider */}
       <HeroSlider />
+
+      {/* Homepage Announcements */}
+      <AnnouncementContainer pageType="homepage" />
 
       {/* Stats Bar */}
       <section className="border-y bg-white">

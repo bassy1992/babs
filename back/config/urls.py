@@ -20,6 +20,7 @@ def api_root(request):
             "products": "/api/products/",
             "collections": "/api/collections/",
             "orders": "/api/orders/",
+            "announcements": "/api/announcements/",
         }
     })
 
@@ -31,6 +32,7 @@ urlpatterns = [
     path('api/products/', include('products.urls')),
     path('api/collections/', include('product_collections.urls')),
     path('api/orders/', include('orders.urls')),
+    path('api/announcements/', include('announcements.urls')),
 ]
 
 if settings.DEBUG:
