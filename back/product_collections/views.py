@@ -18,7 +18,7 @@ class CollectionViewSet(viewsets.ReadOnlyModelViewSet):
     featured: Get featured collections
     """
     
-    queryset = ProductCollection.objects.filter(is_active=True).prefetch_related('collection_products__product')
+    queryset = ProductCollection.objects.filter(is_active=True).prefetch_related('collection_products')
     lookup_field = 'slug'
     
     def get_serializer_class(self):
