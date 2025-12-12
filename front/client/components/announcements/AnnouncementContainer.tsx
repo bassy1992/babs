@@ -17,20 +17,8 @@ export default function AnnouncementContainer({
   maxAnnouncements = 3,
   dismissible = true
 }: AnnouncementContainerProps) {
+  // Only track dismissed IDs in current session (resets on page refresh)
   const [dismissedIds, setDismissedIds] = useState<Set<number>>(new Set());
-
-  // Load dismissed announcements from localStorage
-  useEffect(() => {
-    const stored = localStorage.getItem('dismissedAnnouncements');
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        setDismissedIds(new Set(parsed));
-      } catch (error) {
-        console.error('Failed to parse dismissed announcements:', error);
-      }
-    }
-  }, []);
 
   const { data: announcements = [], isLoading, error } = useQuery({
     queryKey: ['announcements', pageType],
@@ -46,15 +34,8 @@ export default function AnnouncementContainer({
   });
 
   const handleDismiss = (id: number) => {
-    const newDismissedIds = new Set(dismissedIds);
-    newDismissedIds.add(id);
-    setDismissedIds(newDismissedIds);
-    
-    // Save to localStorage
-    localStorage.setItem(
-      'dismissedAnnouncements', 
-      JSON.stringify(Array.from(newDismissedIds))
-    );
+    // Only dismiss for current session - will show again on refresh
+    setDismissedIds(prev => new Set([...prev, id]));
   };
 
   if (isLoading || error || !announcements.length) {
