@@ -1,4 +1,5 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const API_URL = API_BASE_URL.endsWith('/api') ? API_BASE_URL : `${API_BASE_URL}/api`;
 
 export interface Announcement {
   id: number;
@@ -29,8 +30,8 @@ export const announcementsApi = {
   // Get all active announcements
   getAll: async (pageType?: string): Promise<Announcement[]> => {
     const url = pageType 
-      ? `${API_BASE_URL}/api/announcements/?page=${pageType}`
-      : `${API_BASE_URL}/api/announcements/`;
+      ? `${API_URL}/announcements/?page=${pageType}`
+      : `${API_URL}/announcements/`;
     
     const response = await fetch(url);
     if (!response.ok) {
@@ -41,7 +42,7 @@ export const announcementsApi = {
 
   // Get announcements for specific page type
   getByPage: async (pageType: 'homepage' | 'shop' | 'all'): Promise<AnnouncementsResponse> => {
-    const response = await fetch(`${API_BASE_URL}/api/announcements/${pageType}/`);
+    const response = await fetch(`${API_URL}/announcements/${pageType}/`);
     if (!response.ok) {
       throw new Error(`Failed to fetch announcements for ${pageType}`);
     }

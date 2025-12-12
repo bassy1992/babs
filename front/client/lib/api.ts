@@ -2,7 +2,8 @@
  * API client for Django backend
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://babs-production.up.railway.app/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://babs-production.up.railway.app';
+const API_URL = API_BASE_URL.endsWith('/api') ? API_BASE_URL : `${API_BASE_URL}/api`;
 
 export interface ApiProduct {
   id: string;
@@ -87,7 +88,7 @@ export const api = {
   // Products
   products: {
     list: async (params?: Record<string, string>) => {
-      const url = new URL(`${API_BASE_URL}/products/`);
+      const url = new URL(`${API_URL}/products/`);
       if (params) {
         Object.entries(params).forEach(([key, value]) => {
           url.searchParams.append(key, value);
@@ -98,28 +99,28 @@ export const api = {
     },
 
     get: async (slug: string): Promise<ApiProductDetail> => {
-      const response = await fetchWithTimeout(`${API_BASE_URL}/products/${slug}/`);
+      const response = await fetchWithTimeout(`${API_URL}/products/${slug}/`);
       if (!response.ok) throw new Error('Product not found');
       return response.json();
     },
 
     featured: async (): Promise<ApiProduct[]> => {
-      const response = await fetchWithTimeout(`${API_BASE_URL}/products/featured/`);
+      const response = await fetchWithTimeout(`${API_URL}/products/featured/`);
       return response.json();
     },
 
     bestsellers: async (): Promise<ApiProduct[]> => {
-      const response = await fetchWithTimeout(`${API_BASE_URL}/products/bestsellers/`);
+      const response = await fetchWithTimeout(`${API_URL}/products/bestsellers/`);
       return response.json();
     },
 
     search: async (query: string): Promise<ApiProduct[]> => {
-      const response = await fetchWithTimeout(`${API_BASE_URL}/products/search/?q=${encodeURIComponent(query)}`);
+      const response = await fetchWithTimeout(`${API_URL}/products/search/?q=${encodeURIComponent(query)}`);
       return response.json();
     },
 
     related: async (slug: string): Promise<ApiProduct[]> => {
-      const response = await fetchWithTimeout(`${API_BASE_URL}/products/${slug}/related/`);
+      const response = await fetchWithTimeout(`${API_URL}/products/${slug}/related/`);
       return response.json();
     },
   },
@@ -127,19 +128,19 @@ export const api = {
   // Collections
   collections: {
     list: async () => {
-      const response = await fetchWithTimeout(`${API_BASE_URL}/collections/`);
+      const response = await fetchWithTimeout(`${API_URL}/collections/`);
       const data = await response.json();
       return data.results || data;
     },
 
     get: async (slug: string): Promise<ApiCollectionDetail> => {
-      const response = await fetchWithTimeout(`${API_BASE_URL}/collections/${slug}/`);
+      const response = await fetchWithTimeout(`${API_URL}/collections/${slug}/`);
       if (!response.ok) throw new Error('Collection not found');
       return response.json();
     },
 
     featured: async (): Promise<ApiCollection[]> => {
-      const response = await fetchWithTimeout(`${API_BASE_URL}/collections/featured/`);
+      const response = await fetchWithTimeout(`${API_URL}/collections/featured/`);
       const data = await response.json();
       return data.results || data;
     },
@@ -148,7 +149,7 @@ export const api = {
   // Cart
   cart: {
     get: async (sessionKey: string) => {
-      const response = await fetch(`${API_BASE_URL}/orders/cart/${sessionKey}/`);
+      const response = await fetch(`${API_URL}/orders/cart/${sessionKey}/`);
       return response.json();
     },
 
@@ -157,7 +158,7 @@ export const api = {
       variant_id?: number;
       quantity: number;
     }) => {
-      const response = await fetch(`${API_BASE_URL}/orders/cart/${sessionKey}/add_item/`, {
+      const response = await fetch(`${API_URL}/orders/cart/${sessionKey}/add_item/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(item),
@@ -166,7 +167,7 @@ export const api = {
     },
 
     updateItem: async (sessionKey: string, itemId: number, quantity: number) => {
-      const response = await fetch(`${API_BASE_URL}/orders/cart/${sessionKey}/update_item/`, {
+      const response = await fetch(`${API_URL}/orders/cart/${sessionKey}/update_item/`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ item_id: itemId, quantity }),
@@ -175,7 +176,7 @@ export const api = {
     },
 
     removeItem: async (sessionKey: string, itemId: number) => {
-      const response = await fetch(`${API_BASE_URL}/orders/cart/${sessionKey}/remove_item/`, {
+      const response = await fetch(`${API_URL}/orders/cart/${sessionKey}/remove_item/`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ item_id: itemId }),
@@ -184,7 +185,7 @@ export const api = {
     },
 
     clear: async (sessionKey: string) => {
-      const response = await fetch(`${API_BASE_URL}/orders/cart/${sessionKey}/clear/`, {
+      const response = await fetch(`${API_URL}/orders/cart/${sessionKey}/clear/`, {
         method: 'POST',
       });
       return response.json();
@@ -194,7 +195,7 @@ export const api = {
   // Orders
   orders: {
     create: async (orderData: any) => {
-      const response = await fetch(`${API_BASE_URL}/orders/`, {
+      const response = await fetch(`${API_URL}/orders/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderData),
@@ -207,13 +208,13 @@ export const api = {
     },
 
     get: async (orderId: string) => {
-      const response = await fetch(`${API_BASE_URL}/orders/${orderId}/`);
+      const response = await fetch(`${API_URL}/orders/${orderId}/`);
       if (!response.ok) throw new Error('Order not found');
       return response.json();
     },
 
     initializePayment: async (orderId: string, callbackUrl?: string) => {
-      const response = await fetch(`${API_BASE_URL}/orders/initialize_payment/`, {
+      const response = await fetch(`${API_URL}/orders/initialize_payment/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ order_id: orderId, callback_url: callbackUrl }),
@@ -227,7 +228,7 @@ export const api = {
     },
 
     verifyPayment: async (reference: string) => {
-      const response = await fetch(`${API_BASE_URL}/orders/verify_payment/`, {
+      const response = await fetch(`${API_URL}/orders/verify_payment/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ reference }),
@@ -240,7 +241,7 @@ export const api = {
     },
 
     getPaystackConfig: async () => {
-      const response = await fetch(`${API_BASE_URL}/orders/paystack_config/`);
+      const response = await fetch(`${API_URL}/orders/paystack_config/`);
       return response.json();
     },
   },
@@ -248,7 +249,7 @@ export const api = {
   // Promo Codes
   promo: {
     validate: async (code: string, subtotal: number) => {
-      const response = await fetch(`${API_BASE_URL}/orders/promo/${code}/validate/`, {
+      const response = await fetch(`${API_URL}/orders/promo/${code}/validate/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ subtotal }),
