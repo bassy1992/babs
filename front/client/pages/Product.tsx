@@ -6,6 +6,7 @@ import { useCart } from "@/context/CartContext";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn, formatCurrency } from "@/lib/utils";
 import { useProduct, useRelatedProducts } from "@/hooks/useProducts";
+import { ReviewsSection } from "@/components/reviews";
 import {
   ArrowUpRight,
   Droplet,
@@ -518,6 +519,9 @@ export default function Product() {
           </aside>
         </div>
       </section>
+
+      {/* Reviews Section */}
+      <ReviewsSection productId={parseInt(product.id)} />
 
       {/* Related products */}
       <section className="px-4 md:container py-8 md:py-12">
