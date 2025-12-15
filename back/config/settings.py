@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'orders',
     'product_collections',
     'announcements',
+    'reviews',
 ]
 
 MIDDLEWARE = [
@@ -185,7 +186,7 @@ JAZZMIN_SETTINGS = {
     "navigation_expanded": True,
     "hide_apps": [],
     "hide_models": [],
-    "order_with_respect_to": ["announcements", "products", "product_collections", "orders", "auth"],
+    "order_with_respect_to": ["announcements", "products", "product_collections", "reviews", "orders", "auth"],
     
     # Icons
     "icons": {
@@ -196,6 +197,7 @@ JAZZMIN_SETTINGS = {
         "products.Product": "fas fa-spray-can",
         "products.Category": "fas fa-tags",
         "products.Brand": "fas fa-certificate",
+        "reviews.Review": "fas fa-star",
         "orders.Order": "fas fa-shopping-cart",
         "orders.OrderItem": "fas fa-list",
         "product_collections.Collection": "fas fa-layer-group",
