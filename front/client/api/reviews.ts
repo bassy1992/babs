@@ -44,7 +44,9 @@ export const reviewsApi = {
     if (!response.ok) {
       throw new Error('Failed to fetch reviews');
     }
-    return response.json();
+    const data = await response.json();
+    // Handle paginated response from DRF
+    return data.results || data;
   },
 
   // Get review statistics for a product
