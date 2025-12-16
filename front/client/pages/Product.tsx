@@ -521,7 +521,7 @@ export default function Product() {
       </section>
 
       {/* Reviews Section */}
-      <ReviewsSection productId={parseInt(product.id)} />
+      <ReviewsSection productId={product.id} />
 
       {/* Related products */}
       <section className="px-4 md:container py-8 md:py-12">

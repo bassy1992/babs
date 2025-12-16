@@ -8,8 +8,8 @@ urlpatterns = [
     path('create/', views.ReviewCreateView.as_view(), name='review-create'),
     
     # Product reviews
-    path('product/<int:product_id>/', views.ProductReviewListView.as_view(), name='product-reviews'),
-    path('product/<int:product_id>/stats/', views.product_review_stats, name='product-review-stats'),
+    path('product/<str:product_id>/', views.ProductReviewListView.as_view(), name='product-reviews'),
+    path('product/<str:product_id>/stats/', views.product_review_stats, name='product-review-stats'),
     
     # Featured reviews
     path('featured/', views.featured_reviews, name='featured-reviews'),

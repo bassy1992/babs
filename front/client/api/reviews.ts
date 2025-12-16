@@ -29,7 +29,7 @@ export interface ReviewStats {
 }
 
 export interface ReviewFormData {
-  product: number;
+  product: string | number;
   customer_name: string;
   customer_email: string;
   rating: number;
@@ -39,7 +39,7 @@ export interface ReviewFormData {
 
 export const reviewsApi = {
   // Get reviews for a product
-  getProductReviews: async (productId: number): Promise<Review[]> => {
+  getProductReviews: async (productId: string | number): Promise<Review[]> => {
     const response = await fetch(`${API_URL}/reviews/product/${productId}/`);
     if (!response.ok) {
       throw new Error('Failed to fetch reviews');
@@ -48,7 +48,7 @@ export const reviewsApi = {
   },
 
   // Get review statistics for a product
-  getProductStats: async (productId: number): Promise<ReviewStats> => {
+  getProductStats: async (productId: string | number): Promise<ReviewStats> => {
     const response = await fetch(`${API_URL}/reviews/product/${productId}/stats/`);
     if (!response.ok) {
       throw new Error('Failed to fetch review stats');

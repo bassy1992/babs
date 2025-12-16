@@ -16,7 +16,7 @@ class ProductReviewListView(generics.ListAPIView):
     def get_queryset(self):
         product_id = self.kwargs.get('product_id')
         return Review.objects.filter(
-            product_id=product_id,
+            product__id=product_id,
             is_approved=True
         ).order_by('-is_featured', '-created_at')
 
@@ -57,7 +57,7 @@ def product_review_stats(request, product_id):
     Get review statistics for a product
     """
     try:
-        product = Product.objects.get(id=product_id)
+        product = Product.objects.get(id=str(product_id))
     except Product.DoesNotExist:
         return Response(
             {'error': 'Product not found'},

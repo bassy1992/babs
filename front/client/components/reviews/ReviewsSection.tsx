@@ -8,7 +8,7 @@ import { reviewsApi } from '@/api/reviews';
 import { MessageSquare } from 'lucide-react';
 
 interface ReviewsSectionProps {
-  productId: number;
+  productId: string | number;
 }
 
 export default function ReviewsSection({ productId }: ReviewsSectionProps) {
